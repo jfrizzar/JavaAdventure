@@ -1,60 +1,66 @@
 public abstract class Character{
-    private String name;
-    private double health;
-    private double mana;
-    private int GP;
+    private String characterName;
+    private int characterHP;
+    private int characterMP;
+    private int characterGP;
+    private static int characterCount;
 
     //Constructors
     public Character(){
-
+        characterCount++;
     }
 
-    public Character(String name, double health, double mana, int GP){
-        setName(name);
-        setHealth(health);
-        setMana(mana);
-        setGP(GP);
+    public Character(String characterName, int characterHP, int characterMP, int characterGP){
+        this();
+        setCharacterName(characterName);
+        setCharacterHP(characterHP);
+        setCharacterMP(characterMP);
+        setCharacterGP(characterGP);
     }
 
     //Get methods
-    public String getName(){
-        return this.name;
+    public String getCharacterName(){
+        return this.characterName;
     }
 
-    public double getHealth(){
-        return this.health;
+    public double getCharacterHealth(){
+        return this.characterHP;
     }
 
-    public double getMana(){
-        return this.mana;
+    public double getCharacterMana(){
+        return this.characterMP;
     }
 
-    public int getGP(){
-        return this.GP;
+    public int getCharacterGP(){
+        return this.characterGP;
+    }
+
+    public static int getCharacterCount(){
+        return Character.characterCount;
     }
 
     //Set methods
-    public void setName(String name){
-        this.name = name;
+    public void setCharacterName(String characterName){
+        this.characterName = characterName;
     }
 
-    public void setHealth(double health){
-        this.health = health;
+    public void setCharacterHP(int characterHP){
+        this.characterHP = characterHP;
     }
 
-    public void setMana(double mana){
-        this.mana = mana;
+    public void setCharacterMP(int characterMP){
+        this.characterMP = characterMP;
     }
 
-    public void setGP(int GP){
-        this.GP = GP;
+    public void setCharacterGP(int characterGP){
+        this.characterGP = characterGP;
     }
 
     //Special purpose methods
     public String characterDescription(){
-        return "Character name: " + getName() + "\n" +
-        "Current HP: " + getHealth() + "\n" +
-        "Current MP: " + getMana() + "\n" +
-        "Current GP: " + getGP();
+        return "Character name: " + getCharacterName() + "\n" +
+        "Current HP: " + getCharacterHealth() + "\n" +
+        "Current MP: " + getCharacterMana() + "\n" +
+        "Current GP: " + getCharacterGP();
     }
 }
