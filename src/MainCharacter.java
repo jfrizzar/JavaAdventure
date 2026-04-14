@@ -12,12 +12,13 @@ public class MainCharacter extends Character{
 
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
-    int level, int strengthLevel, int defenseLevel){
+    int level, int strengthLevel, int defenseLevel, Location currentLocation){
         super(characterName, characterHP, characterMP, characterGP);
         setExperiencePoints(experiencePoints);
         setLevel(level);
         setStrengthLevel(strengthLevel);
         setDefenseLevel(defenseLevel);
+        setCurrentLocation(currentLocation);
     }
 
     //Get methods
@@ -38,7 +39,7 @@ public class MainCharacter extends Character{
     }
 
     public Location getCurrentLocation(){
-        return this.Location;
+        return this.currentLocation;
     }
 
     //Set methods
@@ -58,12 +59,16 @@ public class MainCharacter extends Character{
         this.defenseLevel = defenseLevel;
     }
 
+    public void setCurrentLocation(Location currentLocation){
+        this.currentLocation = currentLocation;
+    }
+
     //Special purpose methods
     @Override
     public String characterDescription(){
         return super.characterDescription() + "\nExperience Points: " + getExperiencePoints() +
         "\nLevel :" + getLevel() + "\nStrength level: " + getStrengthLevel() + "\nDefense level: " +
-        "Current location: " + getCurrentLocation();
+        "\nCurrent location: " + getCurrentLocation().getLocationName();
     }
 
     //TODO
@@ -71,8 +76,8 @@ public class MainCharacter extends Character{
 
     };
 
-    //TODO
+    /*TODO
     public void useItem(Item item){
 
-    };
+    };*/
 }
