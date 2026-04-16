@@ -77,7 +77,7 @@ public class MainCharacter extends Character{
     };
 
     /*TODO
-    public void useItem(Item item){
+    public void useConsumable(Item consumable){
 
     };*/
 }

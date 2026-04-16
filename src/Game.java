@@ -19,9 +19,13 @@ public class Game{
 
 
     public static void main(String[] args){
+        /*To follow object oriented programming concepts we create an object
+        called myGame which starts the game with the start method. This allows
+        us to work with non-static variables and it makes our code less messy
+        
+        myGame is our engine*/
         Game myGame = new Game();
         myGame.start();
-        
     }
 
 
@@ -58,6 +62,8 @@ public class Game{
         desert = new Location("Tyri Desert");
         inn = new Location("The Stove Pipe Inn");
         castle = new Location("Corrupted Castle");
+
+        //Our main character is created here
         hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forrest);
 
         //Setting all of the exits for our locations based on our map

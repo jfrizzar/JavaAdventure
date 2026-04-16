@@ -23,11 +23,11 @@ public abstract class Character{
         return this.characterName;
     }
 
-    public double getCharacterHealth(){
+    public int getCharacterHP(){
         return this.characterHP;
     }
 
-    public double getCharacterMana(){
+    public int getCharacterMP(){
         return this.characterMP;
     }
 
@@ -59,8 +59,8 @@ public abstract class Character{
     //Special purpose methods
     public String characterDescription(){
         return "Character name: " + getCharacterName() + "\n" +
-        "Current HP: " + getCharacterHealth() + "\n" +
-        "Current MP: " + getCharacterMana() + "\n" +
+        "Current HP: " + getCharacterHP() + "\n" +
+        "Current MP: " + getCharacterMP() + "\n" +
         "Current GP: " + getCharacterGP();
     }
 }
