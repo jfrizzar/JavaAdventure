@@ -40,4 +40,9 @@ public class Location{
         exit[index] = destination;
     }
 
+    public void testMethd(){
+        int x = 0;
+        //test
+        int y = 1;
+    }
 }
