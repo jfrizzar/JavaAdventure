@@ -7,12 +7,12 @@ public class MainCharacter extends Character{
 
     //Constructors
     public MainCharacter(){
-        super();
     }
 
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
     int level, int strengthLevel, int defenseLevel, Location currentLocation){
+
         super(characterName, characterHP, characterMP, characterGP);
         setExperiencePoints(experiencePoints);
         setLevel(level);
@@ -65,15 +65,15 @@ public class MainCharacter extends Character{
 
     //Special purpose methods
     @Override
-    public String characterDescription(){
-        return super.characterDescription() + "\nExperience Points: " + getExperiencePoints() +
+    public String toString(){
+        return super.toString() + "\nExperience Points: " + getExperiencePoints() +
         "\nLevel :" + getLevel() + "\nStrength level: " + getStrengthLevel() + "\nDefense level: " +
         "\nCurrent location: " + getCurrentLocation().getLocationName();
     }
 
     //TODO
     public void gainExperience(int experiencePoints){
-
+        
     };
 
     /*TODO
