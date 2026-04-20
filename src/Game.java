@@ -105,7 +105,7 @@ public class Game{
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to a Java-based text adventure!");
-        System.out.println(hero.characterDescription());
+        System.out.println(hero.toString());
 
         //Need to print instructions here for the user
 

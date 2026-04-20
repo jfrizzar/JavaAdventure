@@ -4,7 +4,6 @@ public class EnemyCharacter extends Character {
 
     //Constructors
     public EnemyCharacter(){
-        super();
     }
 
     public EnemyCharacter(String characterName, int characterHP, 
@@ -34,8 +33,8 @@ public class EnemyCharacter extends Character {
 
     //Special purpose methods
     @Override
-    public String characterDescription(){
-        return super.characterDescription() + "\nLoot: " + getLoot() + "\n Experience reward: " +getExpReward();
+    public String toString(){
+        return super.toString() + "\nLoot: " + getLoot() + "\n Experience reward: " +getExpReward();
     }
 
     //TODO

@@ -3,7 +3,6 @@ public class NPCharacter extends Character{
 
     //Constructors
     public NPCharacter(){
-        super();
     }
 
     public NPCharacter(String characterName, int characterHP,
@@ -24,8 +23,8 @@ public class NPCharacter extends Character{
 
     //Special purpose methods
     @Override
-    public String characterDescription(){
-        return super.characterDescription() + "\nDialogue: " + getDialogue();
+    public String toString(){
+        return super.toString() + "\nDialogue: " + getDialogue();
     }
 
     public String talk(String dialogue){
