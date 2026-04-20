@@ -8,7 +8,8 @@ public class Game{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
 
-    /*Declaring all objects to be initialized globally so that they don't dissapear*/
+    /*Declaring all objects to be initialized globally so that they don't dissapear
+    due to being declared locally within a method*/
     public Location forrest;
     public Location town;
     public Location cave;
@@ -20,10 +21,8 @@ public class Game{
 
     public static void main(String[] args){
         /*To follow object oriented programming concepts we create an object
-        called myGame which starts the game with the start method. This allows
-        us to work with non-static variables and it makes our code less messy
-        
-        myGame is our engine*/
+        called myGame wus to work with non-static variables and it makes our 
+        code less messy myGame is our engine*/
         Game myGame = new Game();
         myGame.start();
     }
@@ -46,7 +45,7 @@ public class Game{
 
 
 
-    /*This method starts the game*/
+    /*This method starts the game by trigerring the initialize and play methods*/
     public void start(){
         initialize();
         play();
@@ -62,11 +61,11 @@ public class Game{
         desert = new Location("Tyri Desert");
         inn = new Location("The Stove Pipe Inn");
         castle = new Location("Corrupted Castle");
-
-        //Our main character is created here
         hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forrest);
 
-        //Setting all of the exits for our locations based on our map
+        /*Here we create all of the exits associated with the location. The first parameter is the
+        cardinal direction which is the final int we declared at the beginning of our code and
+        the second parameter is the location object associated with that exit based on our map*/
         forrest.setExit(NORTH, town);
         forrest.setExit(EAST, desert);
         forrest.setExit(SOUTH, null);
@@ -100,9 +99,7 @@ public class Game{
     }
 
     /*This is the game engine which contains the while loop
-    which keeps the game running.
-    
-    This function will process user input and respond accordingly*/
+    which keeps the game running.*/
     public void play(){
         boolean isRunning = true;
 
@@ -117,6 +114,7 @@ public class Game{
             System.out.print("> ");
             String input = scanner.nextLine();
 
+            /*This function will process user input and respond accordingly*/
             input = processInput(input);
 
             if(input == "quit"){
@@ -130,12 +128,14 @@ public class Game{
 
     }
 
+
     /*This method is in charge of taking user input trimming off any white space and converting
     it to lowercase for processing purposes*/
     public String processInput(String input){
         input = input.toLowerCase().trim();
         return input;
     }
+
 
     /*If our user input is any cardinal direction this method will be triggered
     it will take the string the user input and return the final static int variables
