@@ -3,8 +3,8 @@ public class Location{
     private String locationName;
     //This array will store values 0,1,2,3 which correspond to N,E,S,W
     private Location[] exit;
-    public Location(){
 
+    public Location(){
     }
 
     public Location(String locationName){
@@ -39,11 +39,5 @@ public class Location{
     particular direction */
     public void setExit(int index, Location destination){
         exit[index] = destination;
-    }
-
-    public void testMethd(){
-        int x = 0;
-        //test
-        int y = 1;
     }
 }

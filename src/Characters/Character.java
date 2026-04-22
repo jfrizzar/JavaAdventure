@@ -4,15 +4,12 @@ public abstract class Character{
     private int characterHP;
     private int characterMP;
     private int characterGP;
-    private static int characterCount;
 
     //Constructors
-    public Character(){
-        characterCount++;
+    public Character(){ 
     }
 
     public Character(String characterName, int characterHP, int characterMP, int characterGP){
-        this();
         setCharacterName(characterName);
         setCharacterHP(characterHP);
         setCharacterMP(characterMP);
@@ -36,10 +33,6 @@ public abstract class Character{
         return this.characterGP;
     }
 
-    public static int getCharacterCount(){
-        return Character.characterCount;
-    }
-
     //Set methods
     public void setCharacterName(String characterName){
         this.characterName = characterName;
@@ -58,7 +51,7 @@ public abstract class Character{
     }
 
     //Special purpose methods
-    public String characterDescription(){
+    public String toString(){
         return "Character name: " + getCharacterName() + "\n" +
         "Current HP: " + getCharacterHP() + "\n" +
         "Current MP: " + getCharacterMP() + "\n" +
