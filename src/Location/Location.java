@@ -1,3 +1,4 @@
+package Location;
 public class Location{
     private String locationName;
     //This array will store values 0,1,2,3 which correspond to N,E,S,W
