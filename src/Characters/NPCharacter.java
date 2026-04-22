@@ -116,8 +116,8 @@ public class NPCharacter extends Character{
    }
 
    @Override
-   public String characterDescription(){
-    return super.characterDescription() + "\nNPC with dialogue system.";
+   public String toString(){
+    return super.toString() + "\nNPC with dialogue system.";
    }
 
 
