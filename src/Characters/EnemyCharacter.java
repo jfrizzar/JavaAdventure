@@ -1,3 +1,4 @@
+package Characters;
 public class EnemyCharacter extends Character {
     private Item loot;
     private int expReward;

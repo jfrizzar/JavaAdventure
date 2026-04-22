@@ -1,3 +1,6 @@
+package Characters;
+import Location.Location;
+
 public class MainCharacter extends Character{
     private int experiencePoints;
     private int level;

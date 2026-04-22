@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import Characters.*;
+import Location.*;
+
 public class Game{
     /*These final variables permanently associated the key words 
     for directions with the number used in our arrays*/
