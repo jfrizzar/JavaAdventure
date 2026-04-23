@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import javax.swing.JOptionPane;
 import Characters.*;
 import Location.*;
 
@@ -13,7 +13,7 @@ public class Game{
 
     /*Declaring all objects to be initialized globally so that they don't dissapear
     due to being declared locally within a method*/
-    public Location forrest;
+    public Location forest;
     public Location town;
     public Location cave;
     public Location desert;
@@ -58,35 +58,29 @@ public class Game{
     like locations, characters, items, etc.*/
     public void initialize(){
         //Creating all of our objects
-        forrest = new Location("Forrest of Dreams");
+        forest = new Location("Forest of Dreams");
         town = new Location("The Town of Brimswick");
         cave = new Location("Goopy Cave");
-        desert = new Location("Tyri Desert");
         inn = new Location("The Stove Pipe Inn");
         castle = new Location("Corrupted Castle");
-        hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forrest);
+        hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest);
 
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
         the second parameter is the location object associated with that exit based on our map*/
-        forrest.setExit(NORTH, town);
-        forrest.setExit(EAST, desert);
-        forrest.setExit(SOUTH, null);
-        forrest.setExit(WEST, cave);
+        forest.setExit(NORTH, town);
+        forest.setExit(EAST, null);
+        forest.setExit(SOUTH, null);
+        forest.setExit(WEST, cave);
 
         cave.setExit(NORTH, null); 
-        cave.setExit(EAST, forrest); 
+        cave.setExit(EAST, forest); 
         cave.setExit(SOUTH, null);        
         cave.setExit(WEST, null);
 
-        desert.setExit(NORTH, null);
-        desert.setExit(EAST, null);
-        desert.setExit(SOUTH, null);
-        desert.setExit(WEST, forrest);
-
         town.setExit(NORTH, castle);
         town.setExit(EAST, inn);
-        town.setExit(SOUTH, forrest);
+        town.setExit(SOUTH, forest);
         town.setExit(WEST, null);
 
         inn.setExit(NORTH, null);
@@ -107,8 +101,8 @@ public class Game{
         boolean isRunning = true;
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to a Java-based text adventure!");
-        System.out.println(hero.toString());
+        System.out.println("Type \"man\" to access the manual.\n\n");
+        System.out.println("You awaken in a forest unsure of where you are.");
 
         //Need to print instructions here for the user
 
@@ -120,8 +114,15 @@ public class Game{
             /*This function will process user input and respond accordingly*/
             input = processInput(input);
 
-            if(input == "quit"){
+            if(input.equals("quit")){
                 isRunning = false;
+                scanner.close();
+            }
+            else if(input.equals("man")){
+                manual();
+            }
+            else if(input.equals("character")){
+                JOptionPane.showMessageDialog(null, hero.toString());
             }
             else if(input.equals("go north") || input.equals("go east") || input.equals("go south") || input.equals("go west")){
                 int direction = parseDirection(input);
@@ -137,6 +138,15 @@ public class Game{
     public String processInput(String input){
         input = input.toLowerCase().trim();
         return input;
+    }
+
+    public void manual(){
+        JOptionPane.showMessageDialog(null, "Manual:\n" +
+
+        "To move your character type “go” followed by any of the four cardinal" +
+        "directions (north, east, south, west)\n\n"+
+    
+        "To get a description of your character type \"character\"");
     }
 
 
