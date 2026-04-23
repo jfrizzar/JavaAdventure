@@ -102,6 +102,7 @@ public class NPCharacter extends Character{
 
     //3. Shows a random goodbye
     showRandomGoodbye();
+    input.close();
    }
 
    // ====To be overidden==== //
@@ -119,7 +120,6 @@ public class NPCharacter extends Character{
    public String toString(){
     return super.toString() + "\nNPC with dialogue system.";
    }
-
 
 
 
