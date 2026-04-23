@@ -35,18 +35,30 @@ public abstract class Character{
 
     //Set methods
     public void setCharacterName(String characterName){
+        if(characterName.isBlank() || characterName.isEmpty()){
+            throw new IllegalArgumentException("Character name cannot be an empty string.");
+        }
         this.characterName = characterName;
     }
 
     public void setCharacterHP(int characterHP){
+        if(characterHP < 1){
+            throw new IllegalArgumentException("The HP of a character must be positive.");
+        }
         this.characterHP = characterHP;
     }
 
     public void setCharacterMP(int characterMP){
+        if(characterMP < 1){
+            throw new IllegalArgumentException("The MP of a character must be positive.");
+        }
         this.characterMP = characterMP;
     }
 
     public void setCharacterGP(int characterGP){
+        if(characterGP < 0){
+            throw new IllegalArgumentException("The GP of a character cannot be negative.");
+        }
         this.characterGP = characterGP;
     }
 

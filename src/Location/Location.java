@@ -31,6 +31,9 @@ public class Location{
 
     //Set methods
     public void setLocationName(String locationName){
+        if(locationName.isEmpty() || locationName.isBlank()){
+            throw new IllegalArgumentException("Location name cannot be an empty string.");
+        }
         this.locationName = locationName;
     }
 
@@ -38,6 +41,9 @@ public class Location{
     with a location object to the location object in that
     particular direction */
     public void setExit(int index, Location destination){
+        if(index < 0){
+            throw new IllegalArgumentException("The index of the exit must be 0 or greater");
+        }
         exit[index] = destination;
     }
 }

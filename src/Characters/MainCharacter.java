@@ -47,18 +47,30 @@ public class MainCharacter extends Character{
 
     //Set methods
     public void setExperiencePoints(int experiencePoints){
+        if(experiencePoints < 0){
+            throw new IllegalArgumentException("Experience points cannot be negative.");   
+        }
         this.experiencePoints = experiencePoints;
     }
 
     public void setLevel(int level){
+        if(level < 1){
+            throw new IllegalArgumentException("Level cannot be lower than 1.");
+        }
         this.level = level;
     }
 
     public void setStrengthLevel(int strengthLevel){
+        if(strengthLevel < 1){
+            throw new IllegalArgumentException("Strength level cannot be lower than 1.");
+        }
         this.strengthLevel = strengthLevel;
     }
 
     public void setDefenseLevel(int defenseLevel){
+        if(defenseLevel < 1){
+            throw new IllegalArgumentException("Defense level cannot be lower than 1.");
+        }
         this.defenseLevel = defenseLevel;
     }
 
@@ -70,13 +82,24 @@ public class MainCharacter extends Character{
     @Override
     public String toString(){
         return super.toString() + "\nExperience Points: " + getExperiencePoints() +
-        "\nLevel :" + getLevel() + "\nStrength level: " + getStrengthLevel() + "\nDefense level: " +
-        "\nCurrent location: " + getCurrentLocation().getLocationName();
+        "\nLevel: " + getLevel() + "\nStrength level: " + getStrengthLevel() + "\nDefense level: " +
+        getDefenseLevel() + "\n\nCurrent location: " + getCurrentLocation().getLocationName();
     }
 
-    //TODO
+    //This updates the main characters experience points and levels them up if experience points is 100 or more
     public void gainExperience(int experiencePoints){
-        
+        int newExperiencePoints = getExperiencePoints() + experiencePoints;
+        if(newExperiencePoints >= 100){
+            int newLevel = getLevel() + 1;
+            int newDefenseLevel = getDefenseLevel() + 1;
+            int newStrengthLevel = getStrengthLevel() + 1;
+            setLevel(newLevel);
+            setDefenseLevel(newDefenseLevel);
+            setStrengthLevel(newStrengthLevel);
+        }
+        else{
+            setExperiencePoints(newExperiencePoints);  
+        }
     };
 
     /*TODO
