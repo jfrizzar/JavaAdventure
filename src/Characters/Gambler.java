@@ -27,7 +27,7 @@ public class Gambler extends NPCharacter{
             return false;
 
             default: //User types something other than the choices
-            System.out.println("Yeah, that ain't happenin'."); 
+            System.out.println(talk("\nYeah, that ain't happenin'.")); 
             return true;
         }
     }
