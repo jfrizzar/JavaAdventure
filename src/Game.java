@@ -20,7 +20,10 @@ public class Game{
     public Location castle;
     public Location inn;
     public MainCharacter hero;
+    public Gambler gambler;
 
+    //*helper variables
+    private boolean hasVisitedInn = false;
 
     public static void main(String[] args){
         /*To follow object oriented programming concepts we create an object
@@ -64,6 +67,12 @@ public class Game{
         inn = new Location("The Stove Pipe Inn");
         castle = new Location("Corrupted Castle");
         hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest);
+
+        gambler = new Gambler("Dommermac", 100, 100, 100, new String[]{"Haven't seen you around before.", "Care " + 
+            "to play some dice with a stranger, Stranger?"}, new String[]{"Now don't go getting lost or I'll have one less" + 
+            "person to wager with, ya?", "Hope your luck is better out there than it was in here, Stranger."}, 
+            new String[]{"Ask where you are", "Play Dice","Exit"});
+        
 
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
@@ -184,7 +193,25 @@ public class Game{
         else{
             //This line assigns the nextLocation object to the new current location
             hero.setCurrentLocation(nextLocation);
-            return "Moving to " + hero.getCurrentLocation().getLocationName();
+            //Building movement message
+            String output = "Moving to " + nextLocation.getLocationName();
+            //Printing message
+            System.out.println(output);
+
+            if(nextLocation == inn){
+                if(!hasVisitedInn){
+                       System.out.println("\nYou approach the inn. It isn't a very welcoming place by the looks of it. A" +
+                    " mixture of cold stone and old, seasoned wooden planks comprise its structure. As you open the creaking wooden door" +
+                     " and walk in, however, an amber glow emanates warmth and comfort from the middle of the inn, where a fire" +
+                     " is being kept by a young woman with an iron poker. Before you can observe much else, you see the man." +
+                     " He has a dark hood covering his features. You can't help but wonder if this feeling of comfort in the inn betrays" +
+                     " you. Nonetheless, you feel drawn to speak with him. You approach.");
+                hasVisitedInn = true; //Shows inn text only once 
+                }
+             
+                gambler.interact(hero);//passing player object to NPC to interact with player methods
+            }
+            return "";//returning this because output already happened here
         }
     }
 }

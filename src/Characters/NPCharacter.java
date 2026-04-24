@@ -76,7 +76,7 @@ public class NPCharacter extends Character{
    }
 
    //Main interaction loop (calls on the show methods)
-   public void interact(){
+   public void interact(MainCharacter player){ //Note: this parameter allows the NPC character to play with the user character's methods
     Scanner input = new Scanner(System.in);
     boolean running = true;
 
@@ -97,23 +97,22 @@ public class NPCharacter extends Character{
         }
 
         int choice = input.nextInt();
-        running = handleChoice(choice);
+        running = handleChoice(choice, player);
     }
 
     //3. Shows a random goodbye
     showRandomGoodbye();
-    input.close();
    }
 
    // ====To be overidden==== //
-   public boolean handleChoice(int choice){
+   public boolean handleChoice(int choice, MainCharacter player){
     System.out.println(getCharacterName() + " doesn't respond."); //expect this print if override doesn't work
     return false;
    }
 
    //Helper method
    public String talk(String dialogue){
-    return getCharacterName() + " says: " + dialogue;
+    return "\n" + getCharacterName() + " says: " + dialogue;
    }
 
    @Override
