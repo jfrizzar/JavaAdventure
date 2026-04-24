@@ -1,4 +1,5 @@
 package Characters;
+import Items.Item;
 public class EnemyCharacter extends Character {
     private Item loot;
     private int expReward;
@@ -15,7 +16,7 @@ public class EnemyCharacter extends Character {
     }
 
     //Get methods
-    public Loot getLoot(){
+    public Item getLoot(){
         return this.loot;
     }
 
@@ -40,6 +41,6 @@ public class EnemyCharacter extends Character {
 
     //TODO
     public Item dropLoot(){
-
+    return this.loot;
     }
 }
