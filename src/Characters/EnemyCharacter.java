@@ -10,8 +10,8 @@ public class EnemyCharacter extends Character {
     }
 
     public EnemyCharacter(String characterName, int characterHP, 
-    int characterMP, int characterGP, Item loot, int expReward){
-        super(characterName, characterHP,characterMP, characterGP);
+    int characterMP, int characterGP, Item loot, int expReward, Item[] inventory){
+        super(characterName, characterHP,characterMP, characterGP, inventory);
         setLoot(loot);
         setExpReward(expReward);
     }

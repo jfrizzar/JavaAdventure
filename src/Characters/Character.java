@@ -1,19 +1,23 @@
 package Characters;
+import Items.Item;
+
 public abstract class Character{
     private String characterName;
     private int characterHP;
     private int characterMP;
     private int characterGP;
+    private Item[] inventory;
 
     //Constructors
     public Character(){ 
     }
 
-    public Character(String characterName, int characterHP, int characterMP, int characterGP){
+    public Character(String characterName, int characterHP, int characterMP, int characterGP, Item[] inventory){
         setCharacterName(characterName);
         setCharacterHP(characterHP);
         setCharacterMP(characterMP);
         setCharacterGP(characterGP);
+        setCharacterInventory(inventory);
     }
 
     //Get methods
@@ -31,6 +35,14 @@ public abstract class Character{
 
     public int getCharacterGP(){
         return this.characterGP;
+    }
+
+    public Item[] getCharacterInventory(){
+        return this.inventory;
+    }
+
+    public Item getCharacterInventoryItem(int index){
+        return this.inventory[index];
     }
 
     //Set methods
@@ -60,6 +72,14 @@ public abstract class Character{
             throw new IllegalArgumentException("The GP of a character cannot be negative.");
         }
         this.characterGP = characterGP;
+    }
+
+    public void setCharacterInventory(Item[] inventory){
+        this.inventory = inventory;
+    }
+
+    public void setCharacterInventoryItem(int index, Item newItem){
+        this.inventory[index] = newItem;
     }
 
     //Special purpose methods

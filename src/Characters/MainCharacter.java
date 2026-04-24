@@ -1,5 +1,6 @@
 package Characters;
 import Location.Location;
+import Items.Item;
 
 public class MainCharacter extends Character{
     private int experiencePoints;
@@ -14,9 +15,8 @@ public class MainCharacter extends Character{
 
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
-    int level, int strengthLevel, int defenseLevel, Location currentLocation){
-
-        super(characterName, characterHP, characterMP, characterGP);
+    int level, int strengthLevel, int defenseLevel, Location currentLocation, Item[] inventory){
+        super(characterName, characterHP,characterMP, characterGP, inventory);
         setExperiencePoints(experiencePoints);
         setLevel(level);
         setStrengthLevel(strengthLevel);

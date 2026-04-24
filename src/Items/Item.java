@@ -1,6 +1,6 @@
 package Items;
 
-public abstract class Item {
+public class Item {
     private String itemName;
 
     public Item() {
@@ -22,6 +22,6 @@ public abstract class Item {
     }
 
     public String toString() {
-        return "Item name: " + getItemName();
+        return getItemName();
     }
 }
