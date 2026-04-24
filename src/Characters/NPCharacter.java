@@ -1,5 +1,6 @@
 package Characters;
 import java.util.Scanner;
+import Items.Item;
 
 //This class acts as a blueprint for NPC characters. Its subclasses will be NPC archetypes like Merchant and Gambler from which 
 //- NPC characters can be made from
@@ -15,9 +16,9 @@ public class NPCharacter extends Character{
    
    //Specific constructor
    public NPCharacter(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings, 
-    String[] goodbyes, String[] dialogueOptions){
+    String[] goodbyes, String[] dialogueOptions, Item[] inventory){
 
-    super(characterName, characterHP, characterMP, characterGP);
+    super(characterName, characterHP, characterMP, characterGP, inventory);
     setGreetings(greetings);
     setGoodbyes(goodbyes);
     setDialogueOptions(dialogueOptions);
@@ -102,6 +103,7 @@ public class NPCharacter extends Character{
 
     //3. Shows a random goodbye
     showRandomGoodbye();
+    input.close();
    }
 
    // ====To be overidden==== //
