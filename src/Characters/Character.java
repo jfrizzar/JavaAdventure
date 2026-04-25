@@ -9,15 +9,15 @@ public abstract class Character{
     private Item[] inventory;
 
     //Constructors
-    public Character(){ 
-    }
+    public Character(){}
 
-    public Character(String characterName, int characterHP, int characterMP, int characterGP, Item[] inventory){
+    public Character(String characterName, int characterHP, 
+        int characterMP, int characterGP, int inventorySize){
         setCharacterName(characterName);
         setCharacterHP(characterHP);
         setCharacterMP(characterMP);
         setCharacterGP(characterGP);
-        setCharacterInventory(inventory);
+        this.inventory = new Item[inventorySize];
     }
 
     //Get methods
@@ -37,12 +37,12 @@ public abstract class Character{
         return this.characterGP;
     }
 
-    public Item[] getCharacterInventory(){
-        return this.inventory;
-    }
-
     public Item getCharacterInventoryItem(int index){
         return this.inventory[index];
+    }
+
+    public int getCharacterInventoryLength(){
+        return this.inventory.length;
     }
 
     //Set methods
@@ -74,11 +74,7 @@ public abstract class Character{
         this.characterGP = characterGP;
     }
 
-    public void setCharacterInventory(Item[] inventory){
-        this.inventory = inventory;
-    }
-
-    public void setCharacterInventoryItem(int index, Item newItem){
+    public void setInventoryItem(int index, Item newItem){
         this.inventory[index] = newItem;
     }
 

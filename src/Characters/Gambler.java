@@ -1,13 +1,21 @@
 package Characters;
 import Items.Item;
 
-public class Gambler extends NPCharacter{
-    //This character will play a dice game with the player. Win = gold, lose = gambler takes
-    //- an item from the player
+/*
+    This character will play a dice game with the player. 
+    When a player wins they get gold
+    When a player loses the gambler takes an item for the players inventory
+*/
 
-    //Constructor
-    public Gambler(String name, int hp, int mp, int gp, String[] greetings, String[] goodbyes, String[] dialogueOptions, Item[] inventory){
-        super(name, hp, mp, gp, greetings, goodbyes, dialogueOptions, inventory);
+public class Gambler extends NPCharacter{
+    private String[] greetings;
+
+    //Constructors
+    public Gambler(String characterName, int characterHP,
+        int characterMP, int characterGP, String[] greetings, 
+        String[] goodbyes, String[] dialogueOptions, int inventorySize){
+        super(characterName, characterHP, characterMP, characterGP
+            ,greetings, goodbyes, dialogueOptions, inventorySize);
     }
 
     @Override
@@ -62,5 +70,4 @@ public class Gambler extends NPCharacter{
 
 
     }
-
-}//End of class
+}

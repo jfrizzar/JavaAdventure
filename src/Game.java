@@ -72,11 +72,11 @@ public class Game{
     */
     public void initialize(){
         //Creating all of our locations
-        forest = new Location("Forest of Dreams", "A quaint forest, there is nobody around except for yourself.","North - Brimswick\n West - Goopy Cave");
-        town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n");
-        cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!", "The only way out of here is East.");
-        inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table", "The only way out of here is West.");
-        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark night comes up to you menacingly.", "The only way out is South");
+        forest = new Location("Forest of Dreams", "A quaint forest, there is nobody around except for yourself.","North - Brimswick\n West - Goopy Cave", 2);
+        town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 2);
+        cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!", "The only way out of here is East.", 2);
+        inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table", "The only way out of here is West.", 2);
+        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark night comes up to you menacingly.", "The only way out is South", 2);
 
         
         //Creating all of our items
@@ -86,17 +86,16 @@ public class Game{
         sword = new Weapon("Sword", 10);
 
         //Creating all of our characters
-        hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest, new Item[4]);
-        hero.setCharacterInventoryItem(0, emptySlot);
-        hero.setCharacterInventoryItem(1, emptySlot);
-        hero.setCharacterInventoryItem(2, emptySlot);
-        hero.setCharacterInventoryItem(3, emptySlot);
+        hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest, 4);
+        hero.setInventoryItem(0, emptySlot);
+        hero.setInventoryItem(1, emptySlot);
+        hero.setInventoryItem(2, emptySlot);
+        hero.setInventoryItem(3, emptySlot);
 
         gambler = new Gambler("Dommermac", 100, 100, 100, 
             new String[]{"Haven't seen you around before.", "Care to play some dice with a stranger, Stranger?"}, 
             new String[]{"Now don't go getting lost or I'll have one less person to wager with, ya?", "Hope your luck is better out there than it was in here, Stranger."}, 
-            new String[]{"Ask where you are", "Play Dice","Exit"}, 
-            new Item[4]);
+            new String[]{"Ask where you are", "Play Dice","Exit"}, 4);
         
 
         /*Here we create all of the exits associated with the location. The first parameter is the
@@ -273,7 +272,6 @@ public class Game{
                                         """);
                 hasVisitedInn = true; //Shows inn text only once 
                 }
-             
                 gambler.interact(hero);//passing player object to NPC to interact with player methods
             }
             return "";//returning this because output already happened here
@@ -285,7 +283,7 @@ public class Game{
         brief description about the players current location.
     */
     public void viewInventory(){
-        for(int i = 0; i < hero.getCharacterInventory().length; i++){
+        for(int i = 0; i < hero.getCharacterInventoryLength(); i++){
             System.out.println("Item " + (i + 1) + ": " + hero.getCharacterInventoryItem(i));
         }
     }
@@ -296,10 +294,10 @@ public class Game{
     */
     public boolean searchArea(){
     boolean itemFound = false;
-        for(int i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-            if(hero.getCurrentLocation().getItem(i) != null){
+        for(int i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
+            if(hero.getCurrentLocation().getLocationItem(i) != null){
                 itemFound = true;
-                System.out.println("You found: " + hero.getCurrentLocation().getItem(i).getItemName() + " " + hero.getCurrentLocation().getItemLocation(i));
+                System.out.println("You found: " + hero.getCurrentLocation().getLocationItem(i).getItemName() + " " + hero.getCurrentLocation().getItemSpot(i));
             }
             else{
                 continue;
@@ -313,81 +311,79 @@ public class Game{
     }
 
     /*
-        This method allows the player to pickup and item. It first checks what item the player wants to pickup.
-        Then it adds the item to the players inventory checking from empty slots. After it finds an empty slot
-        it updates that slot and then it removes the item for the location. 
+        This method allows the player to pickup and item. It first checks to see if there
+        are items in a location. If there are it calls the itemDecider method, if not it states
+        so.
     */
     public void pickupItem(String input){
-        int i;
+        boolean availableItems = false;
         try{
-            if(input.equals("pick up health potion")){
-                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Health Potion")){
-                        
-                        for(i = 0; i < hero.getCharacterInventory().length; i++){
-                            if(hero.getCharacterInventoryItem(i) == null || hero.getCharacterInventoryItem(i) == emptySlot){
-                                hero.setCharacterInventoryItem(i, healthPotion);
-                                System.out.println("You pick up a health potion.");
-                                
-                                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Health Potion")){
-                                        hero.getCurrentLocation().setItem(i, null, null);
-                                    }
-                                }
-                                return;
-                            }
-                        }
-                        System.out.println("Inventory Full.");
-                        return;
-                    }
+            for(int i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
+                if(hero.getCurrentLocation().getLocationItem(i) != null){
+                    availableItems = true;
+                }
+                else{
+                    continue;
                 }
             }
-            else if(input.equals("pick up mana potion")){
-                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Mana Potion")){
-                        for(i = 0; i < hero.getCharacterInventory().length; i++){
-                            
-                            if(hero.getCharacterInventoryItem(i) == null || hero.getCharacterInventoryItem(i) == emptySlot){
-                                hero.setCharacterInventoryItem(i, manaPotion);
-                                System.out.println("You pick up a mana potion.");
-                                
-                                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Mana Potion")){
-                                        hero.getCurrentLocation().setItem(i, null, null);
-                                    }
-                                }
-                                return;
-                            }
-                        }
-                        System.out.println("Inventory Full.");
-                        return;
-                    }
-                }
+            if(availableItems == true){
+                itemDecider(input);
             }
-            else if(input.equals("pick up sword")){
-                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Sword")){
-                        for(i = 0; i < hero.getCharacterInventory().length; i++){
-                            
-                            if(hero.getCharacterInventoryItem(i) == null || hero.getCharacterInventoryItem(i) == emptySlot){
-                                hero.setCharacterInventoryItem(i, sword);
-                                System.out.println("You pick up a sword.");
-                                
-                                for(i = 0; i < hero.getCurrentLocation().getAllItems().length; i++){
-                                    if(hero.getCurrentLocation().getItem(i).getItemName().equals("Sword")){
-                                        hero.getCurrentLocation().setItem(i, null, null);
-                                    }
-                                }
-                                return;
-                            }
-                        }
-                        System.out.println("Inventory Full.");
-                        return;
-                    }
-                }
-            } 
+            else{
+                System.out.println("There are no items in this location.");
+            }
         }catch(NullPointerException npe){
-            return;
+            System.out.println("There are no items in this location.");
         }
+    }
+
+    /*
+        This method decides on the item type the player wants to pick up.
+    */
+    public void itemDecider(String input){
+        int i;
+        Consumable healthPotion = new Consumable("Health Potion", 50, 0);
+        Consumable manaPotion = new Consumable("Mana Potion", 0, 50);
+        Weapon sword = new Weapon("Sword", 10);
+
+        for(i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
+            if(input.toLowerCase().endsWith("health potion")){
+                itemTransfer(healthPotion);
+                return;
+            }
+            else if(input.toLowerCase().endsWith("mana potion")){
+                itemTransfer(manaPotion);
+                return;
+            }
+            else if(input.toLowerCase().endsWith("sword")){
+                itemTransfer(sword);
+                return;
+            }
+        }
+    }
+
+    /*
+        This method takes care of the logic of picking up and removing the item from the location.
+    */
+    public void itemTransfer(Item newItem){
+        int i;
+        for(i = 0; i < hero.getCharacterInventoryLength(); i++){
+            if(hero.getCharacterInventoryItem(i) == null || hero.getCharacterInventoryItem(i) == emptySlot){
+                hero.setInventoryItem(i, newItem);
+                System.out.println("You pick up: " + newItem.getItemName());
+                
+                for(i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
+                    if(hero.getCurrentLocation().getLocationItem(i) == null){
+                        continue;
+                    }
+                    else if(hero.getCurrentLocation().getLocationItem(i).getItemName().equals(newItem.getItemName())){
+                        hero.getCurrentLocation().setItem(i, null, null);
+                    }
+                }
+                return;
+            }
+        }
+        System.out.println("Inventory Full.");
+        return;
     }
 }

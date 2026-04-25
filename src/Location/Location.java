@@ -1,5 +1,4 @@
 package Location;
-
 import Items.Item;
 
 public class Location{
@@ -8,19 +7,21 @@ public class Location{
     private String roadSign;
     //This array will store values 0,1,2,3 which correspond to N,E,S,W
     private Location[] exit;
-    private Item[] item;
-    private String[] itemLocation = new String [2];
+    private Item[] itemInLocation;
+    private String[] itemSpot;
 
-    public Location(){
-    }
+    public Location(){}
 
-    public Location(String locationName, String locationDescription, String roadSign){
+    public Location(String locationName, String locationDescription, String roadSign, int maxLocationItems){
         setLocationName(locationName);
         setLocationDescription(locationDescription);
         setRoadSign(roadSign);
-        this.item = new Item[2];
-        /*This locations array is now size 4 so that it can hold the 
-        locations associated with N,E,S,W*/
+        this.itemInLocation = new Item[maxLocationItems];
+        this.itemSpot = new String[maxLocationItems];
+        /*
+            This locations array is now size 4 so that it can hold the 
+            locations associated with N,E,S,W
+        */
         this.exit = new Location[4];
     }
 
@@ -38,25 +39,26 @@ public class Location{
     }
 
     public Location getExit(int index){
-        /*Example would be: "castle.getExit(2)" would
-        return the exit to the South back to town
-        because the number 2 is mapped to SOUTH
-        
-        This method returns Location because we store
-        Location objects in our array*/
+        /*
+            Example would be: "castle.getExit(2)" would
+            return the exit to the South back to town
+            because the number 2 is mapped to SOUTH
+            This method returns Location because we store
+            Location objects in our array
+        */
         return exit[index];
     }
 
-    public Item getItem(int index){
-        return this.item[index];
+    public Item getLocationItem(int index){
+        return this.itemInLocation[index];
     }
 
-    public String getItemLocation(int index){
-        return this.itemLocation[index];
+    public String getItemSpot(int index){
+        return this.itemSpot[index];
     }
 
-    public Item[] getAllItems(){
-        return item;
+    public int getLocationItemLength(){
+        return itemInLocation.length;
     }
 
     //Set methods
@@ -81,9 +83,11 @@ public class Location{
         this.roadSign = roadSign;
     }
 
-    /*This method sets the index of an array associated 
-    with a location object to the location object in that
-    particular direction */
+    /*
+        This method sets the index of an array associated 
+        with a location object to the location object in that
+        particular direction.
+    */
     public void setExit(int index, Location destination){
         if(index < 0){
             throw new IllegalArgumentException("The index of the exit must be 0 or greater");
@@ -91,11 +95,11 @@ public class Location{
         exit[index] = destination;
     }
     
-    public void setItem(int index, Item newItem, String itemLocation){
+    public void setItem(int index, Item newItem, String itemSpot){
         if(index < 0){
             throw new IllegalArgumentException("The index of the exit must be 0 or greater");
         }
-        this.item[index] = newItem;
-        this.itemLocation[index] = itemLocation;
+        this.itemInLocation[index] = newItem;
+        this.itemSpot[index] = itemSpot;
     }
 }
