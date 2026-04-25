@@ -1,6 +1,5 @@
 package Characters;
 import Items.Item;
-
 public class EnemyCharacter extends Character {
     private Item loot;
     private int expReward;
@@ -40,8 +39,8 @@ public class EnemyCharacter extends Character {
         return super.toString() + "\nLoot: " + getLoot() + "\n Experience reward: " +getExpReward();
     }
 
-    //TODO
+    /*TODO
     public Item dropLoot(){
-        return getLoot();
-    }
+
+    }*/
 }
