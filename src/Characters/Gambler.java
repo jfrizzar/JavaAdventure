@@ -44,7 +44,7 @@ public class Gambler extends NPCharacter{
         int gamblerRoll = (int)(Math.random() * 6) + 1;
 
         System.out.println("You roll: " + playerRoll);
-        System.out.println(getCharacterName() + "rolls: " + gamblerRoll);
+        System.out.println(getCharacterName() + " rolls: " + gamblerRoll);
 
         if(playerRoll > gamblerRoll){//gambler gives player 20 gold
             System.out.println(talk("Luck runs out eventually, you know? Here's 20 gold pieces."));
