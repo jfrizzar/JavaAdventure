@@ -15,8 +15,8 @@ public class MainCharacter extends Character{
 
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
-    int level, int strengthLevel, int defenseLevel, Location currentLocation, Item[] inventory){
-        super(characterName, characterHP,characterMP, characterGP, inventory);
+    int level, int strengthLevel, int defenseLevel, Location currentLocation, int inventorySize){
+        super(characterName, characterHP,characterMP, characterGP, inventorySize);
         setExperiencePoints(experiencePoints);
         setLevel(level);
         setStrengthLevel(strengthLevel);

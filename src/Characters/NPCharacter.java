@@ -1,12 +1,15 @@
 package Characters;
 import java.util.Scanner;
-import Items.Item;
 
-//This class acts as a blueprint for NPC characters. Its subclasses will be NPC archetypes like Merchant and Gambler from which 
-//- NPC characters can be made from
+/*
+    This class acts as a blueprint for NPC characters. 
+    Its subclasses will be NPC archetypes like Merchant and Gambler from which 
+    NPC characters can be made from
+*/
+
 public class NPCharacter extends Character{ 
-   private String[] greetings; //Array for randomly picked greeting
-   private String[] goodbyes; //Array for randomly picked goodbye
+   private String[] greetings; //Array for randomly picked greetings
+   private String[] goodbyes; //Array for randomly picked goodbyes
    private String[] dialogueOptions;  //Array that holds main dialogue options 
 
    //Constructors
@@ -14,17 +17,16 @@ public class NPCharacter extends Character{
     super();
    }
    
-   //Specific constructor
-   public NPCharacter(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings, 
-    String[] goodbyes, String[] dialogueOptions, Item[] inventory){
-
-    super(characterName, characterHP, characterMP, characterGP, inventory);
+   public NPCharacter(String characterName, int characterHP, 
+    int characterMP, int characterGP, String[] greetings,
+    String[] goodbyes, String[] dialogueOptions, int inventorySize){
+    super(characterName, characterHP, characterMP, characterGP, inventorySize);
     setGreetings(greetings);
     setGoodbyes(goodbyes);
     setDialogueOptions(dialogueOptions);
    }
 
-   //Getters
+   //Get methods
    public String[] getGreetings(){
     return greetings;
    }
@@ -37,7 +39,7 @@ public class NPCharacter extends Character{
     return dialogueOptions;
    }
 
-   //Setters
+   //Set methods
    public void setGreetings(String[] greetings){
     this.greetings = greetings;
    }
@@ -119,9 +121,7 @@ public class NPCharacter extends Character{
 
    @Override
    public String toString(){
-    return super.toString() + "\nNPC with dialogue system.";
+    return super.toString() + 
+    "\nNPC with dialogue system.";
    }
-
-
-
-}//End of class
+}
