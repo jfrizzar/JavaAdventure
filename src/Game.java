@@ -260,16 +260,12 @@ public class Game{
 
             if(nextLocation == inn){
                 if(!hasVisitedInn){
-                       System.out.println("""
-                        You approach the inn. It isn't a very welcoming place by the looks of it. A mixture of cold stone and old, 
-                        seasoned wooden planks comprise its structure. As you open the creaking wooden door and walk in, however, 
-                        an amber glow emanates warmth and comfort from the middle of the inn, where a fire is being kept by a young 
-                        woman with an iron poker. 
-                        
-                        Before you can observe much else, you see a mysterious man. He has a dark hood covering his features. 
-                        You can't help but wonder if this feeling of comfort in the inn betrays you. 
-                        Nonetheless, you feel drawn to speak with him. You approach.
-                                        """);
+                       System.out.println("You approach the inn. It isn't a very welcoming place by the looks of it. A mixture of cold stone and old," +
+                        "seasoned wooden planks comprise its structure. As you open the creaking wooden door and walk in, however," +
+                        "an amber glow emanates warmth and comfort from the middle of the inn, where a fire is being kept by a young" +
+                        "woman with an iron poker. Before you can observe much else, you see a mysterious man. He has a dark hood covering" +
+                        "his features. You can't help but wonder if this feeling of comfort in the inn betrays you. Nonetheless, you feel drawn" +
+                         "to speak with him. You approach.");
                 hasVisitedInn = true; //Shows inn text only once 
                 }
                 gambler.interact(hero);//passing player object to NPC to interact with player methods
