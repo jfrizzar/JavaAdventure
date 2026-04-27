@@ -8,7 +8,6 @@ import Items.Item;
 */
 
 public class Gambler extends NPCharacter{
-    private String[] greetings;
 
     //Constructors
     public Gambler(String characterName, int characterHP,
