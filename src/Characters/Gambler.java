@@ -4,7 +4,7 @@ import Items.Item;
 /*
     This character will play a dice game with the player. 
     When a player wins they get gold
-    When a player loses the gambler takes an item for the players inventory
+    When a player loses the gambler takes an item from the players inventory
 */
 
 public class Gambler extends NPCharacter{
@@ -60,8 +60,31 @@ public class Gambler extends NPCharacter{
         else if(playerRoll < gamblerRoll){//gambler takes item if there is one to take
             System.out.println(talk("Well, well, well. Not your lucky day. What's a " + 
             "little greed without spontineity? I'll be taking something from you then."));
-            System.out.println("The gambling man takes something from your inventory so quickly you're unsure what exactly he took");//placeholder
-            //unfinished (Need items finished)
+            
+            int inventorySize = player.getCharacterInventoryLength();
+
+            //Finds random item and takes it
+            int index = -1;
+
+            for(int i = 0; i < inventorySize; i++){//looping through inventory
+                int randomIndex = (int)(Math.random() * inventorySize);
+                
+                Item item = player.getCharacterInventoryItem(randomIndex);
+
+                if(item != null && !item.getItemName().equals("Empty")){
+                    index = randomIndex;
+                    break;
+                }
+            }
+            if(index == -1){
+                //If the player has no items to take:
+                System.out.println(talk("Y'ave nothing worth taking looks like. Game was on the house then, ya?"));
+            }else{
+                Item stolenItem = player.getCharacterInventoryItem(index);
+                player.setInventoryItem(index, null); //removing item
+
+                System.out.println("\nThe hooded man snatches your " + stolenItem.getItemName() + "! You may never see it again.");
+            }
         }
         else{
             System.out.println(talk("Looks like no one won. Let's go again, ya?"));
