@@ -4,9 +4,7 @@ public class Consumable extends Item {
     private int healthPoints;
     private int manaPoints;
 
-    //Constructors
-    public Consumable() {}
-
+    //Constructor
     public Consumable(String itemName, int healthPoints, int manaPoints) {
         super(itemName);
         setHealthPoints(healthPoints);

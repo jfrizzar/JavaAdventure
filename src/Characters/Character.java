@@ -8,9 +8,7 @@ public abstract class Character{
     private int characterGP;
     private Item[] inventory;
 
-    //Constructors
-    public Character(){}
-
+    //Constructor
     public Character(String characterName, int characterHP, 
         int characterMP, int characterGP, int inventorySize){
         setCharacterName(characterName);

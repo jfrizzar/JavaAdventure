@@ -1,6 +1,5 @@
 package Characters;
 import Location.Location;
-import Items.Item;
 
 public class MainCharacter extends Character{
     private int experiencePoints;
@@ -9,10 +8,7 @@ public class MainCharacter extends Character{
     private int defenseLevel;
     private Location currentLocation;
 
-    //Constructors
-    public MainCharacter(){
-    }
-
+    //Constructor
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
     int level, int strengthLevel, int defenseLevel, Location currentLocation, int inventorySize){
@@ -101,9 +97,4 @@ public class MainCharacter extends Character{
             setExperiencePoints(newExperiencePoints);  
         }
     };
-
-    /*TODO
-    public void useConsumable(Item consumable){
-
-    };*/
 }

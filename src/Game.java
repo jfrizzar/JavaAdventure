@@ -143,7 +143,7 @@ public class Game{
         boolean isRunning = true;
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type \"man\" to access the manual.\n\n");
+        System.out.println("\n\n\n\nType \"man\" to access the manual.");
         System.out.println("You awaken in a forest unsure of where you are.");
 
         //Need to print instructions here for the user
@@ -200,21 +200,13 @@ public class Game{
     public void manual(){
         String man = """
         Manual:
-
         To quit the game type "quit" or "q".
-
         To move your character type “Go” followed by North, East, South, or West.
-
         To get a description of your character type “Character”.
-
         To get a description of your current location type “Location”.
-
         To view your inventory type “View Inventory”.
-
         To search an area for useful items type "Search area".
-
         To pick up an item type "Pick up <item name>".
-                
                     """;
         JOptionPane.showMessageDialog(null, man);
     }
@@ -396,7 +388,7 @@ public class Game{
                 return;
             }
         }
-        System.out.println("Inventory Full.");
+        System.out.println("Inventory is full.");
         return;
     }
 }

@@ -12,13 +12,8 @@ public class NPCharacter extends Character{
    private String[] goodbyes; //Array for randomly picked goodbyes
    private String[] dialogueOptions;  //Array that holds main dialogue options 
 
-   //Constructors
-   public NPCharacter(){
-    super();
-   }
-   
-   public NPCharacter(String characterName, int characterHP, 
-    int characterMP, int characterGP, String[] greetings,
+   //Constructor
+   public NPCharacter(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings,
     String[] goodbyes, String[] dialogueOptions, int inventorySize){
     super(characterName, characterHP, characterMP, characterGP, inventorySize);
     setGreetings(greetings);

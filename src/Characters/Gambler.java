@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class Gambler extends NPCharacter{
 
     //Constructors
-    public Gambler(String characterName, int characterHP,
-        int characterMP, int characterGP, String[] greetings, 
+    public Gambler(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings, 
         String[] goodbyes, String[] dialogueOptions, int inventorySize){
         super(characterName, characterHP, characterMP, characterGP
             ,greetings, goodbyes, dialogueOptions, inventorySize);

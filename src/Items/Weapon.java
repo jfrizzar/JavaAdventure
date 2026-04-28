@@ -1,12 +1,8 @@
 package Items;
-
-
 public class Weapon extends Item {
     private int damage;
 
-    //Constructors
-    public Weapon() {}
-
+    //Constructor
     public Weapon(String itemName, int damage) {
         super(itemName);
         setDamage(damage);

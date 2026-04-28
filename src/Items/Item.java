@@ -3,9 +3,7 @@ package Items;
 public class Item {
     private String itemName;
 
-    //Constructors
-    public Item() {}
-
+    //Constructor
     public Item(String itemName) {
         setItemName(itemName);
     }

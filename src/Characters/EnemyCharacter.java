@@ -6,10 +6,9 @@ public class EnemyCharacter extends Character{
     private int expReward;
 
     //Constructors
-    public EnemyCharacter(){}
-
     public EnemyCharacter(String characterName, int characterHP, 
-    int characterMP, int characterGP, Item loot, int expReward, int inventorySize){
+    int characterMP, int characterGP, Item loot, int expReward, 
+    int inventorySize){
         super(characterName, characterHP,characterMP, characterGP, inventorySize);
         setLoot(loot);
         setExpReward(expReward);
@@ -40,9 +39,4 @@ public class EnemyCharacter extends Character{
         "\nLoot: " + getLoot() + 
         "\nExperience reward: " + getExpReward();
     }
-
-    /*TODO
-    public Item dropLoot(){
-
-    }*/
 }

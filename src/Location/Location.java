@@ -10,8 +10,6 @@ public class Location{
     private Item[] itemInLocation;
     private String[] itemSpot;
 
-    public Location(){}
-
     public Location(String locationName, String locationDescription, String roadSign, int maxLocationItems){
         setLocationName(locationName);
         setLocationDescription(locationDescription);
