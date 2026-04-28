@@ -1,5 +1,6 @@
 package Characters;
 import Items.Item;
+import java.util.Scanner;
 
 /*
     This character will play a dice game with the player. 
@@ -18,14 +19,14 @@ public class Gambler extends NPCharacter{
     }
 
     @Override
-    public boolean handleChoice(int choice, MainCharacter player){
+    public boolean handleChoice(int choice, MainCharacter player, Scanner input){
         switch(choice){
             
             case 1: //Response to "Where am I?"
             System.out.println(talk("Ah, you don't know where you are, do you? Here's the thing. If I told you, that would ruin the" +  
             " only thing that's fun about a mystery, now wouldn't it? Why don't you have a seat and we'll play some dice, ya? Looks " +
-            "like you've got about " + player.getCharacterGP() + " gold pieces on you. Don't worry, Maybe you're carrying something else" +
-            " I might like."));
+            "like you've got about " + player.getCharacterGP() + " gold pieces on you. I have plenty of gold, but don't worry, maybe you're" +
+             " carrying something else I might like."));
             return true;
 
             case 2: //Dice game chosen (Ends in gold reward or taken item)

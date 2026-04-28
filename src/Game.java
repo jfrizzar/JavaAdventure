@@ -22,6 +22,7 @@ public class Game{
     public Location inn;
     public MainCharacter hero;
     public Gambler gambler;
+    public Merchant merchant;
     public Item emptySlot;
     public Consumable healthPotion;
     public Consumable manaPotion;
@@ -29,6 +30,7 @@ public class Game{
 
     //*helper variables
     private boolean hasVisitedInn = false;
+    private boolean hasVisitedTown = false; 
 
     public static void main(String[] args){
         /*
@@ -86,7 +88,7 @@ public class Game{
         sword = new Weapon("Sword", 10);
 
         //Creating all of our characters
-        hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest, 4);
+        hero = new MainCharacter("Hero", 100, 100, 100, 0, 1, 1, 1, forest, 4);
         hero.setInventoryItem(0, emptySlot);
         hero.setInventoryItem(1, emptySlot);
         hero.setInventoryItem(2, emptySlot);
@@ -97,6 +99,9 @@ public class Game{
             new String[]{"Now don't go getting lost or I'll have one less person to wager with, ya?", "Hope your luck is better out there than it was in here, Stranger."}, 
             new String[]{"Ask where you are", "Play Dice","Exit"}, 4);
         
+        merchant = new Merchant("Wizlo", 100, 100, 3000, new String[]{"Welcome traveler!", "Welcome " +
+         "to my shop, friend!"}, new String[]{"Bye bye, friend.", "Let's not be strangers now. Goodbye!"},new String[]{"Talk", "Shop", "Leave"
+         }, 5, new Item[]{healthPotion, manaPotion, sword}, new int[]{10, 10, 40});
 
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
@@ -153,7 +158,7 @@ public class Game{
 
             if(input.equals("quit") || input.equals("q")){
                 isRunning = false;
-                scanner.close();
+                
             }
             else if(input.equals("man")){
                 manual();
@@ -163,7 +168,7 @@ public class Game{
             }
             else if(input.equals("go north") || input.equals("go east") || input.equals("go south") || input.equals("go west")){
                 int direction = parseDirection(input);
-                System.out.println(moveMainCharacter(direction));
+                System.out.println(moveMainCharacter(direction, scanner));
             }
             else if(input.equals("location")){
                 System.out.println(hero.getCurrentLocation().getLocationDescription());
@@ -178,6 +183,7 @@ public class Game{
                 pickupItem(input);
             }
         }
+        scanner.close();
 
     }
 
@@ -242,7 +248,7 @@ public class Game{
         main characters currentLocation variable
     */
 
-    public String moveMainCharacter(int direction){
+    public String moveMainCharacter(int direction, Scanner scanner){
         //This line assigns a new nextLocation object with the exit of the current location object
         Location nextLocation = hero.getCurrentLocation().getExit(direction);
 
@@ -258,17 +264,28 @@ public class Game{
             //Printing message
             System.out.println(output);
 
+            if(nextLocation == town){
+                if(!hasVisitedTown){
+                    System.out.println("You make your way into Brimswick...");
+                    hasVisitedTown = true;
+                }
+                System.out.println("'Wizlo's Wonders' is written in big letters on a plank, running vertical to the ground." +
+                 " It marks a stall where a small, fat man with an exquisite outfit sits, and he waves you over.");
+                 merchant.interact(hero, scanner);
+
+            }
+
             if(nextLocation == inn){
                 if(!hasVisitedInn){
                        System.out.println("You approach the inn. It isn't a very welcoming place by the looks of it. A mixture of cold stone and old," +
-                        "seasoned wooden planks comprise its structure. As you open the creaking wooden door and walk in, however," +
-                        "an amber glow emanates warmth and comfort from the middle of the inn, where a fire is being kept by a young" +
+                        "seasoned wooden planks comprise its structure. As you open the creaking wooden door and walk in, however, " +
+                        "an amber glow emanates warmth and comfort from the middle of the inn, where a fire is being kept by a young " +
                         "woman with an iron poker. Before you can observe much else, you see a mysterious man. He has a dark hood covering" +
-                        "his features. You can't help but wonder if this feeling of comfort in the inn betrays you. Nonetheless, you feel drawn" +
-                         "to speak with him. You approach.");
+                        " his features. You can't help but wonder if this feeling of comfort in the inn betrays you. Nonetheless, you feel drawn" +
+                         " to speak with him. You approach.");
                 hasVisitedInn = true; //Shows inn text only once 
                 }
-                gambler.interact(hero);//passing player object to NPC to interact with player methods
+                gambler.interact(hero, scanner);//passing player object to NPC to interact with player methods
             }
             return "";//returning this because output already happened here
         }

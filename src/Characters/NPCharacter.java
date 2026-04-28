@@ -79,8 +79,7 @@ public class NPCharacter extends Character{
    }
 
    //Main interaction loop (calls on the show methods)
-   public void interact(MainCharacter player){ //Note: this parameter allows the NPC character to play with the user character's methods
-    Scanner input = new Scanner(System.in);
+   public void interact(MainCharacter player, Scanner input){ //Note: this parameter allows the NPC character to play with the user character's methods
     boolean running = true;
 
     //1. Shows a random greeting
@@ -93,23 +92,23 @@ public class NPCharacter extends Character{
 
         System.out.print("Choose an option: ");
 
-        if(!input.hasNextInt()){
+        String line = input.nextLine();
+
+        if(line.isEmpty() || !line.matches("\\d+")){
             System.out.println("You cannot choose that.");
-            input.next(); //clears scanner
             continue; //restarts loop
         }
 
-        int choice = input.nextInt();
-        running = handleChoice(choice, player);
+        int choice = Integer.parseInt(line);
+        running = handleChoice(choice, player, input);
     }
 
     //3. Shows a random goodbye
     showRandomGoodbye();
-    input.close();
    }
 
    // ====To be overidden==== //
-   public boolean handleChoice(int choice, MainCharacter player){
+   public boolean handleChoice(int choice, MainCharacter player, Scanner input){
     System.out.println(getCharacterName() + " doesn't respond."); //expect this print if override doesn't work
     return false;
    }
