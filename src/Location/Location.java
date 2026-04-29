@@ -97,36 +97,36 @@ public class Location{
         }
         exit[index] = destination;
     }
-    public EnemyCharacter[] getEnemies(){
-    return this.enemies;
-}
-
-public void setEnemy(EnemyCharacter enemy){
-    if(enemyCount < enemies.length){
-        enemies[enemyCount] = enemy;
-        enemyCount++;
+        public EnemyCharacter[] getEnemies(){
+        return this.enemies;
     }
-}
 
-public EnemyCharacter getEnemyByName(String name){
-    for(int i = 0; i < enemyCount; i++){
-        if(enemies[i].getCharacterName().equalsIgnoreCase(name)){
-            return enemies[i];
+    public void setEnemy(EnemyCharacter enemy){
+        if(enemyCount < enemies.length){
+            enemies[enemyCount] = enemy;
+            enemyCount++;
         }
     }
-    return null;
-}
 
-public void removeEnemy(EnemyCharacter enemy){
-    for(int i = 0; i < enemyCount; i++){
-        if(enemies[i] == enemy){
-            enemies[i] = enemies[enemyCount - 1];
-            enemies[enemyCount - 1] = null;
-            enemyCount--;
-            return;
+    public EnemyCharacter getEnemyByName(String name){
+        for(int i = 0; i < enemyCount; i++){
+            if(enemies[i].getCharacterName().equalsIgnoreCase(name)){
+                return enemies[i];
+            }
+        }
+        return null;
+    }
+
+    public void removeEnemy(EnemyCharacter enemy){
+        for(int i = 0; i < enemyCount; i++){
+            if(enemies[i] == enemy){
+                enemies[i] = enemies[enemyCount - 1];
+                enemies[enemyCount - 1] = null;
+                enemyCount--;
+                return;
+            }
         }
     }
-}
     
     public void setItem(int index, Item newItem, String itemSpot){
         if(index < 0){

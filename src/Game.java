@@ -23,6 +23,7 @@ public class Game{
     public MainCharacter hero;
     public Gambler gambler;
     public Merchant merchant;
+    public EnemyCharacter enemy1;
     public Item emptySlot;
     public Consumable healthPotion;
     public Consumable manaPotion;
@@ -78,7 +79,7 @@ public class Game{
         town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 2);
         cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!", "The only way out of here is East.", 2);
         inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table", "The only way out of here is West.", 2);
-        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark night comes up to you menacingly.", "The only way out is South", 2);
+        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight comes up to you menacingly.", "The only way out is South", 2);
 
         
         //Creating all of our items
@@ -102,6 +103,8 @@ public class Game{
         merchant = new Merchant("Wizlo", 100, 100, 3000, new String[]{"Welcome traveler!", "Welcome " +
          "to my shop, friend!"}, new String[]{"Bye bye, friend.", "Let's not be strangers now. Goodbye!"},new String[]{"Talk", "Shop", "Leave"
          }, 5, new Item[]{healthPotion, manaPotion, sword}, new int[]{10, 10, 40});
+
+        enemy1 = new EnemyCharacter("Draxus", 25, 50, 10, healthPotion, 10, 3); 
 
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
@@ -133,6 +136,7 @@ public class Game{
         castle.setExit(SOUTH, town);
         castle.setExit(WEST, null);
 
+        castle.setEnemy(enemy1);
     }
 
     /*
@@ -162,7 +166,7 @@ public class Game{
             }
             else if(input.startsWith("fight ")){
                 String enemyName = input.substring(6);
-                isRunning = fightEnemy(enemyName);
+                fightEnemy(enemyName);
             }
             else if(input.equals("man")){
                 manual();
@@ -188,7 +192,6 @@ public class Game{
             }
         }
         scanner.close();
-
     }
 
 
@@ -211,6 +214,7 @@ public class Game{
         To view your inventory type “View Inventory”.
         To search an area for useful items type "Search area".
         To pick up an item type "Pick up <item name>".
+        To fight an enemy in the area type "Fight"
                     """;
         JOptionPane.showMessageDialog(null, man);
     }
@@ -408,10 +412,10 @@ public class Game{
     if(hero.getLevel() >= enemy.getExpReward() / 10){
         System.out.println("You defeated " + enemy.getCharacterName());
 
-        Item loot = enemy.dropLoot();
+        Item loot = enemy.getLoot();
 
         if(loot != null){
-            hero.addItem(loot);
+            itemDecider(loot.getItemName());
         }
 
         hero.gainExperience(enemy.getExpReward());
