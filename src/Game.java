@@ -1,7 +1,9 @@
+import Characters.*;
+import Items.Item;
+import Items.Weapon;
+import Location.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-import Characters.*;
-import Location.*;
 
 public class Game{
     /*These final variables permanently associated the key words 
@@ -64,6 +66,9 @@ public class Game{
         inn = new Location("The Stove Pipe Inn");
         castle = new Location("Corrupted Castle");
         hero = new MainCharacter("Hero", 100, 100, 0, 0, 1, 1, 1, forest);
+        Weapon goblinSword = new Weapon("Goblin Sword",10);
+        EnemyCharacter goblin = new EnemyCharacter("Goblin", 30,10,5,goblinSword,20);
+        cave.setEnemy(goblin);
 
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
@@ -117,6 +122,10 @@ public class Game{
             if(input.equals("quit")){
                 isRunning = false;
                 scanner.close();
+            }
+            else if(input.startsWith("fight ")){
+                String enemyName = input.substring(6);
+                isRunning = fightEnemy(enemyName);
             }
             else if(input.equals("man")){
                 manual();
@@ -187,4 +196,35 @@ public class Game{
             return "Moving to " + hero.getCurrentLocation().getLocationName();
         }
     }
-}
+    public boolean fightEnemy(String enemyName){
+    EnemyCharacter enemy = hero.getCurrentLocation().getEnemyByName(enemyName);
+
+    if(enemy == null){
+        System.out.println("That enemy is not here.");
+        return true;
+    }
+
+    System.out.println("You are fighting " + enemy.getCharacterName());
+
+    if(hero.getLevel() >= enemy.getExpReward() / 10){
+        System.out.println("You defeated " + enemy.getCharacterName());
+
+        Item loot = enemy.dropLoot();
+
+        if(loot != null){
+            hero.addItem(loot);
+        }
+
+        hero.gainExperience(enemy.getExpReward());
+        hero.getCurrentLocation().removeEnemy(enemy);
+
+        return true;
+    }
+    else{
+        System.out.println(enemy.getCharacterName() + " was too strong.");
+        System.out.println("Game over.");
+        return false;
+    }
+  }
+ }
+

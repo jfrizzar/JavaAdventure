@@ -1,4 +1,5 @@
 package Characters;
+import Items.Item;
 import Location.Location;
 
 public class MainCharacter extends Character{
@@ -7,6 +8,8 @@ public class MainCharacter extends Character{
     private int strengthLevel;
     private int defenseLevel;
     private Location currentLocation;
+    private Item[] inventory = new Item[10];
+    private int itemCount = 0;
 
     //Constructors
     public MainCharacter(){
@@ -77,6 +80,13 @@ public class MainCharacter extends Character{
     public void setCurrentLocation(Location currentLocation){
         this.currentLocation = currentLocation;
     }
+    public void addItem(Item item){
+    if(itemCount < inventory.length){
+        inventory[itemCount] = item;
+        itemCount++;
+        System.out.println(item.getItemName() + " was added to your inventory.");
+    }
+}
 
     //Special purpose methods
     @Override
