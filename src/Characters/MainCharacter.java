@@ -11,15 +11,11 @@ public class MainCharacter extends Character{
     private Item[] inventory = new Item[10];
     private int itemCount = 0;
 
-    //Constructors
-    public MainCharacter(){
-    }
-
+    //Constructor
     public MainCharacter(String characterName, int characterHP, 
     int characterMP, int characterGP, int experiencePoints, 
-    int level, int strengthLevel, int defenseLevel, Location currentLocation){
-
-        super(characterName, characterHP, characterMP, characterGP);
+    int level, int strengthLevel, int defenseLevel, Location currentLocation, int inventorySize){
+        super(characterName, characterHP,characterMP, characterGP, inventorySize);
         setExperiencePoints(experiencePoints);
         setLevel(level);
         setStrengthLevel(strengthLevel);
@@ -111,9 +107,4 @@ public class MainCharacter extends Character{
             setExperiencePoints(newExperiencePoints);  
         }
     };
-
-    /*TODO
-    public void useConsumable(Item consumable){
-
-    };*/
 }

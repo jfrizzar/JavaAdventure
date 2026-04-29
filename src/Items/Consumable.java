@@ -4,17 +4,14 @@ public class Consumable extends Item {
     private int healthPoints;
     private int manaPoints;
 
-    // Constructors
-    public Consumable() {
-    }
-
+    //Constructor
     public Consumable(String itemName, int healthPoints, int manaPoints) {
         super(itemName);
         setHealthPoints(healthPoints);
         setManaPoints(manaPoints);
     }
 
-    // Get methods
+    //Get methods
     public int getHealthPoints() {
         return this.healthPoints;
     }
@@ -23,6 +20,7 @@ public class Consumable extends Item {
         return this.manaPoints;
     }
 
+    //Set methods
     public void setHealthPoints(int healthPoints) {
         if (healthPoints < 0) {
             throw new IllegalArgumentException("Health points cannot be negative.");
@@ -37,15 +35,13 @@ public class Consumable extends Item {
         this.manaPoints = manaPoints;
     }
 
-    // Special purpose methods
+    //Special purpose methods
     public void consume() {
-    System.out.println(getItemName() + " restores " + getHealthPoints()
-            + " HP and " + getManaPoints() + " MP.");
-}
+    System.out.println(getItemName() + " restores " + getHealthPoints() + " HP and " + getManaPoints() + " MP.");
+    }
 
     @Override
     public String toString() {
-        return super.toString() + "\nHealth Points: " + getHealthPoints()
-                + "\nMana Points: " + getManaPoints();
+        return super.toString() + "\nHealth Points: " + getHealthPoints() + "\nMana Points: " + getManaPoints();
     }
 }

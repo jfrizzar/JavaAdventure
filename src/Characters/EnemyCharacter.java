@@ -1,16 +1,15 @@
 package Characters;
 import Items.Item;
-public class EnemyCharacter extends Character {
+
+public class EnemyCharacter extends Character{
     private Item loot;
     private int expReward;
 
     //Constructors
-    public EnemyCharacter(){
-    }
-
     public EnemyCharacter(String characterName, int characterHP, 
-    int characterMP, int characterGP, Item loot, int expReward){
-        super(characterName, characterHP,characterMP, characterGP);
+    int characterMP, int characterGP, Item loot, int expReward, 
+    int inventorySize){
+        super(characterName, characterHP,characterMP, characterGP, inventorySize);
         setLoot(loot);
         setExpReward(expReward);
     }
@@ -36,11 +35,8 @@ public class EnemyCharacter extends Character {
     //Special purpose methods
     @Override
     public String toString(){
-        return super.toString() + "\nLoot: " + getLoot() + "\n Experience reward: " +getExpReward();
-    }
-
-    //TODO
-    public Item dropLoot(){
-    return this.loot;
+        return super.toString() + 
+        "\nLoot: " + getLoot() + 
+        "\nExperience reward: " + getExpReward();
     }
 }

@@ -1,29 +1,27 @@
 package Characters;
 import java.util.Scanner;
 
-//This class acts as a blueprint for NPC characters. Its subclasses will be NPC archetypes like Merchant and Gambler from which 
-//- NPC characters can be made from
+/*
+    This class acts as a blueprint for NPC characters. 
+    Its subclasses will be NPC archetypes like Merchant and Gambler from which 
+    NPC characters can be made from
+*/
+
 public class NPCharacter extends Character{ 
-   private String[] greetings; //Array for randomly picked greeting
-   private String[] goodbyes; //Array for randomly picked goodbye
+   private String[] greetings; //Array for randomly picked greetings
+   private String[] goodbyes; //Array for randomly picked goodbyes
    private String[] dialogueOptions;  //Array that holds main dialogue options 
 
-   //Constructors
-   public NPCharacter(){
-    super();
-   }
-   
-   //Specific constructor
-   public NPCharacter(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings, 
-    String[] goodbyes, String[] dialogueOptions){
-
-    super(characterName, characterHP, characterMP, characterGP);
+   //Constructor
+   public NPCharacter(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings,
+    String[] goodbyes, String[] dialogueOptions, int inventorySize){
+    super(characterName, characterHP, characterMP, characterGP, inventorySize);
     setGreetings(greetings);
     setGoodbyes(goodbyes);
     setDialogueOptions(dialogueOptions);
    }
 
-   //Getters
+   //Get methods
    public String[] getGreetings(){
     return greetings;
    }
@@ -36,7 +34,7 @@ public class NPCharacter extends Character{
     return dialogueOptions;
    }
 
-   //Setters
+   //Set methods
    public void setGreetings(String[] greetings){
     this.greetings = greetings;
    }
@@ -76,8 +74,7 @@ public class NPCharacter extends Character{
    }
 
    //Main interaction loop (calls on the show methods)
-   public void interact(){
-    Scanner input = new Scanner(System.in);
+   public void interact(MainCharacter player, Scanner input){ //Note: this parameter allows the NPC character to play with the user character's methods
     boolean running = true;
 
     //1. Shows a random greeting
@@ -90,14 +87,15 @@ public class NPCharacter extends Character{
 
         System.out.print("Choose an option: ");
 
-        if(!input.hasNextInt()){
+        String line = input.nextLine();
+
+        if(line.isEmpty() || !line.matches("\\d+")){
             System.out.println("You cannot choose that.");
-            input.next(); //clears scanner
             continue; //restarts loop
         }
 
-        int choice = input.nextInt();
-        running = handleChoice(choice);
+        int choice = Integer.parseInt(line);
+        running = handleChoice(choice, player, input);
     }
 
     //3. Shows a random goodbye
@@ -105,22 +103,19 @@ public class NPCharacter extends Character{
    }
 
    // ====To be overidden==== //
-   public boolean handleChoice(int choice){
+   public boolean handleChoice(int choice, MainCharacter player, Scanner input){
     System.out.println(getCharacterName() + " doesn't respond."); //expect this print if override doesn't work
     return false;
    }
 
    //Helper method
    public String talk(String dialogue){
-    return getCharacterName() + " says: " + dialogue;
+    return "\n" + getCharacterName() + " says: " + dialogue;
    }
 
    @Override
    public String toString(){
-    return super.toString() + "\nNPC with dialogue system.";
+    return super.toString() + 
+    "\nNPC with dialogue system.";
    }
-
-
-
-
-}//End of class
+}

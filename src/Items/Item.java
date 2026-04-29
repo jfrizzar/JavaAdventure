@@ -1,19 +1,19 @@
 package Items;
 
-public abstract class Item {
+public class Item {
     private String itemName;
 
-    public Item() {
-    }
-
+    //Constructor
     public Item(String itemName) {
         setItemName(itemName);
     }
 
+    //Get methods
     public String getItemName() {
         return this.itemName;
     }
 
+    //Set methods
     public void setItemName(String itemName) {
         if (itemName == null || itemName.isBlank() || itemName.isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be an empty string.");
@@ -21,7 +21,8 @@ public abstract class Item {
         this.itemName = itemName;
     }
 
+    //Special purpose methods
     public String toString() {
-        return "Item name: " + getItemName();
+        return getItemName();
     }
 }

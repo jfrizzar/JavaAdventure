@@ -1,24 +1,19 @@
 package Items;
-
-
 public class Weapon extends Item {
     private int damage;
 
-    // Constructors
-    public Weapon() {
-    }
-
+    //Constructor
     public Weapon(String itemName, int damage) {
         super(itemName);
         setDamage(damage);
     }
 
-    // Get methods
+    //Get methods
     public int getDamage() {
         return this.damage;
     }
 
-    // Set methods
+    //Set methods
     public void setDamage(int damage) {
         if (damage < 1) {
             throw new IllegalArgumentException("Weapon damage must be positive.");
@@ -26,7 +21,7 @@ public class Weapon extends Item {
         this.damage = damage;
     }
 
-    // Special purpose methods
+    //Special purpose methods
     public void attack(int damage) {
         System.out.println(getItemName() + " attacks for " + damage + " HP.");
     }
