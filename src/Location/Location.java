@@ -1,4 +1,5 @@
 package Location;
+import Characters.EnemyCharacter;
 import Items.Item;
 
 public class Location{
@@ -7,6 +8,8 @@ public class Location{
     private String roadSign;
     //This array will store values 0,1,2,3 which correspond to N,E,S,W
     private Location[] exit;
+    private EnemyCharacter[] enemies;
+    private int enemyCount;
     private Item[] itemInLocation;
     private String[] itemSpot;
 
@@ -21,6 +24,8 @@ public class Location{
             locations associated with N,E,S,W
         */
         this.exit = new Location[4];
+        this.enemies = new EnemyCharacter[5];
+        this.enemyCount = 0;
     }
 
     //Get methods
@@ -92,6 +97,36 @@ public class Location{
         }
         exit[index] = destination;
     }
+    public EnemyCharacter[] getEnemies(){
+    return this.enemies;
+}
+
+public void setEnemy(EnemyCharacter enemy){
+    if(enemyCount < enemies.length){
+        enemies[enemyCount] = enemy;
+        enemyCount++;
+    }
+}
+
+public EnemyCharacter getEnemyByName(String name){
+    for(int i = 0; i < enemyCount; i++){
+        if(enemies[i].getCharacterName().equalsIgnoreCase(name)){
+            return enemies[i];
+        }
+    }
+    return null;
+}
+
+public void removeEnemy(EnemyCharacter enemy){
+    for(int i = 0; i < enemyCount; i++){
+        if(enemies[i] == enemy){
+            enemies[i] = enemies[enemyCount - 1];
+            enemies[enemyCount - 1] = null;
+            enemyCount--;
+            return;
+        }
+    }
+}
     
     public void setItem(int index, Item newItem, String itemSpot){
         if(index < 0){

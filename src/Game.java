@@ -1,8 +1,8 @@
-import java.util.Scanner;
-import javax.swing.JOptionPane;
 import Characters.*;
 import Items.*;
 import Location.*;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Game{
     /*These final variables permanently associated the key words 
@@ -159,6 +159,10 @@ public class Game{
             if(input.equals("quit") || input.equals("q")){
                 isRunning = false;
                 
+            }
+            else if(input.startsWith("fight ")){
+                String enemyName = input.substring(6);
+                isRunning = fightEnemy(enemyName);
             }
             else if(input.equals("man")){
                 manual();
@@ -391,4 +395,35 @@ public class Game{
         System.out.println("Inventory is full.");
         return;
     }
-}
+    public boolean fightEnemy(String enemyName){
+    EnemyCharacter enemy = hero.getCurrentLocation().getEnemyByName(enemyName);
+
+    if(enemy == null){
+        System.out.println("That enemy is not here.");
+        return true;
+    }
+
+    System.out.println("You are fighting " + enemy.getCharacterName());
+
+    if(hero.getLevel() >= enemy.getExpReward() / 10){
+        System.out.println("You defeated " + enemy.getCharacterName());
+
+        Item loot = enemy.dropLoot();
+
+        if(loot != null){
+            hero.addItem(loot);
+        }
+
+        hero.gainExperience(enemy.getExpReward());
+        hero.getCurrentLocation().removeEnemy(enemy);
+
+        return true;
+    }
+    else{
+        System.out.println(enemy.getCharacterName() + " was too strong.");
+        System.out.println("Game over.");
+        return false;
+    }
+  }
+ }
+
