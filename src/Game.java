@@ -23,6 +23,7 @@ public class Game{
     public MainCharacter hero;
     public Gambler gambler;
     public Merchant merchant;
+    public EnemyCharacter enemy1;
     public Item emptySlot;
     public Consumable healthPotion;
     public Consumable manaPotion;
@@ -110,6 +111,8 @@ public class Game{
          "to my shop, friend!"}, new String[]{"Bye bye, friend.", "Let's not be strangers now. Goodbye!"},new String[]{"Talk", "Shop", "Leave"
          }, 5, new Item[]{healthPotion, manaPotion, sword}, new int[]{10, 10, 40});
 
+        enemy1 = new EnemyCharacter("Draxus", 25, 50, 10, healthPotion, 10, 3); 
+
         /*Here we create all of the exits associated with the location. The first parameter is the
         cardinal direction which is the final int we declared at the beginning of our code and
         the second parameter is the location object associated with that exit based on our map*/
@@ -140,6 +143,7 @@ public class Game{
         castle.setExit(SOUTH, town);
         castle.setExit(WEST, null);
 
+        castle.setEnemy(enemy1);
     }
 
     /*
@@ -169,7 +173,7 @@ public class Game{
             }
             else if(input.startsWith("fight ")){
                 String enemyName = input.substring(6);
-                isRunning = fightEnemy(enemyName);
+                fightEnemy(enemyName);
             }
             else if(input.equals("man")){
                 manual();
@@ -198,7 +202,6 @@ public class Game{
 }
         }
         scanner.close();
-
     }
 
 
@@ -425,7 +428,7 @@ public class Game{
         Item loot = enemy.getLoot();
 
         if(loot != null){
-            hero.addItem(loot);
+            itemDecider(loot.getItemName());
         }
 
         hero.gainExperience(enemy.getExpReward());
