@@ -10,6 +10,13 @@ The workspace contains two folders by default, where:
 
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
+## How to Run Our Program
+- Compile the Game.java folder by navigating to the src folder and typing "javac Game.java"
+- Start our game by navigating to the Game.class folder and typing "java Game"
+- You will be prompted with instructions on how to access the manual for the game
+- Your character will awaken in a forest and you will be able to move to different locations based on the instructions within the game manual
+- Have fun!
+
 ## Design
 
 **To access the game manual the player can type "man" to discover all available player interactions.**

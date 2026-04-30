@@ -173,7 +173,10 @@ public class Game{
             }
             else if(input.startsWith("fight ")){
                 String enemyName = input.substring(6);
-                fightEnemy(enemyName);
+                boolean result = fightEnemy(enemyName);
+                if (result == false){
+                    isRunning = false;
+                }
             }
             else if(input.equals("man")){
                 manual();
