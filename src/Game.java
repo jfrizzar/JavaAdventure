@@ -79,7 +79,7 @@ public class Game{
         town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 2);
         cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!", "The only way out of here is East.", 2);
         inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table", "The only way out of here is West.", 2);
-        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight comes up to you menacingly.", "The only way out is South", 2);
+        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight named draxus comes up to you menacingly.", "The only way out is South", 2);
 
         
         //Creating all of our items
@@ -87,6 +87,13 @@ public class Game{
         healthPotion = new Consumable("Health Potion", 50, 0);
         manaPotion = new Consumable("Mana Potion", 0, 50);
         sword = new Weapon("Sword", 10);
+        Weapon goblinSword = new Weapon("Goblin Sword",10);
+        EnemyCharacter goblin = new EnemyCharacter( "Goblin", 30, 10, 5, goblinSword, 20,1);
+        cave.setEnemy(goblin);
+        Weapon darkKnightSword = new Weapon("Dark Knight Sword", 20);
+        EnemyCharacter draxus = new EnemyCharacter("Draxus", 60,20,10,darkKnightSword,30, 1);
+
+        castle.setEnemy(draxus);
 
         //Creating all of our characters
         hero = new MainCharacter("Hero", 100, 100, 100, 0, 1, 1, 1, forest, 4);
@@ -190,6 +197,9 @@ public class Game{
             else if(input.startsWith("pick up")){
                 pickupItem(input);
             }
+            else if(input.startsWith("use ")){
+            useItem(input);
+}
         }
         scanner.close();
     }
@@ -214,7 +224,8 @@ public class Game{
         To view your inventory type “View Inventory”.
         To search an area for useful items type "Search area".
         To pick up an item type "Pick up <item name>".
-        To fight an enemy in the area type "Fight"
+        To fight an enemy type "fight <enemy name>".
+        To use a potion type "use <potion name>".
                     """;
         JOptionPane.showMessageDialog(null, man);
     }
@@ -263,6 +274,7 @@ public class Game{
             String output = "Moving to " + nextLocation.getLocationName();
             //Printing message
             System.out.println(output);
+            System.out.println(nextLocation.getLocationDescription());
 
             if(nextLocation == town){
                 if(!hasVisitedTown){
@@ -359,6 +371,7 @@ public class Game{
         Consumable manaPotion = new Consumable("Mana Potion", 0, 50);
         Weapon sword = new Weapon("Sword", 10);
 
+
         for(i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
             if(input.toLowerCase().endsWith("health potion")){
                 itemTransfer(healthPotion);
@@ -429,5 +442,37 @@ public class Game{
         return false;
     }
   }
+  public void useItem(String input){
+    String itemName = input.substring(4).trim();
+
+    for(int i = 0; i < hero.getCharacterInventoryLength(); i++){
+        Item item = hero.getCharacterInventoryItem(i);
+
+        if(item != null && item.getItemName().equalsIgnoreCase(itemName)){
+
+            if(item instanceof Consumable){
+                Consumable potion = (Consumable) item;
+
+                // apply effects
+                hero.setCharacterHP(hero.getCharacterHP() + potion.getHealthPoints());
+                hero.setCharacterMP(hero.getCharacterMP() + potion.getManaPoints());
+
+                System.out.println("You used " + potion.getItemName());
+                potion.consume();
+
+                // remove item after use
+                hero.setInventoryItem(i, null);
+
+                return;
+            }
+            else{
+                System.out.println("You cannot use that item.");
+                return;
+            }
+        }
+    }
+
+    System.out.println("Item not found in inventory.");
+}
  }
 
