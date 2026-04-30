@@ -464,7 +464,7 @@ public class Game{
                 potion.consume();
 
                 // remove item after use
-                hero.setInventoryItem(i, null);
+                hero.setInventoryItem(i, emptySlot);
 
                 return;
             }
