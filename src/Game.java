@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import Characters.*;
 import Items.*;
 import Location.*;
@@ -34,6 +35,7 @@ public class Game{
     //Helper Variables
     private boolean hasVisitedInn = false;
     private boolean hasVisitedTown = false; 
+    public boolean gameRunning = true;
 
     public static void main(String[] args){
         /*
@@ -49,8 +51,16 @@ public class Game{
         This method starts the game by trigerring the initialize and play methods
     */
     public void start(){
+        Scanner gameScanner = new Scanner(System.in);
         initialize();
         play();
+        while(gameRunning == true){
+            System.out.print(">");
+            String userInput = gameScanner.nextLine();
+            String processedInput = processInput(userInput);
+            handlePlayerInput(processedInput);
+        }
+        gameScanner.close();
     }
 
     /*
@@ -145,7 +155,8 @@ public class Game{
         String input = processInput(rawInput);
 
         if(input.equals("quit") || input.equals("q")){
-            return "Game Over. Refresh to restart.";
+            gameRunning = false;
+            return "Shutting Down";
         }
         if(input.startsWith("fight ")){
             String enemyName = input.substring(6);
@@ -155,7 +166,7 @@ public class Game{
             }
         }
         if(input.equals("man")){
-            return manual();
+            manual();
         }
         if(input.equals("character")){
             return hero.toString();
@@ -182,7 +193,7 @@ public class Game{
         return "";
     }
 
-    public String manual(){
+    public void manual(){
         String man = """
         Manual:
         To quit the game type "quit" or "q".
@@ -195,7 +206,7 @@ public class Game{
         To fight an enemy type "fight <enemy name>".
         To use a potion type "use <potion name>".
                     """;
-        return man;
+        System.out.println(man);
     }
 
 
