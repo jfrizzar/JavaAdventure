@@ -32,15 +32,13 @@ public class Game{
     public Consumable manaPotion;
     public Weapon sword;
 
-    //Helper Variables
-    private boolean hasVisitedInn = false;
-    private boolean hasVisitedTown = false; 
+    //Set is running to true to enable the gameplay loop
     public boolean gameRunning = true;
 
     public static void main(String[] args){
         /*
             To follow object oriented programming concepts we create an object
-            called myGame wus to work with non-static variables and it makes our 
+            called myGame to work with non-static variables and it makes our 
             code less messy myGame is our engine
         */
         Game javaAdventure = new Game();
@@ -57,8 +55,7 @@ public class Game{
         while(gameRunning == true){
             System.out.print(">");
             String userInput = gameScanner.nextLine();
-            String processedInput = processInput(userInput);
-            handlePlayerInput(processedInput);
+            System.out.println(handlePlayerInput(userInput));
         }
         gameScanner.close();
     }
@@ -68,7 +65,7 @@ public class Game{
         like locations, characters, items, etc.
     */
     public void initialize(){
-        //Creating all of our locations
+        //Initializing all locations
         forest = new Location("Forest of Dreams", "A quaint forest, there is nobody around except for yourself.\n","North - Brimswick\n West - Goopy Cave", 2);
         town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.\n", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 2);
         cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!\n", "The only way out of here is East.", 2);
@@ -76,7 +73,7 @@ public class Game{
         castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight named draxus comes up to you menacingly.\n", "The only way out is South", 2);
 
         
-        //Creating all of our items
+        //Initializing all items
         emptySlot = new Item("Empty");
         healthPotion = new Consumable("Health Potion", 50, 0);
         manaPotion = new Consumable("Mana Potion", 0, 50);
@@ -86,7 +83,7 @@ public class Game{
         EnemyCharacter draxus = new EnemyCharacter("Draxus", 60,20,1000,darkKnightSword,200, 4);
         EnemyCharacter goblin = new EnemyCharacter( "Goblin", 30, 10, 5, goblinSword, 20, 1);
 
-        //Creating all of our characters
+        //Initializing all characters
         hero = new MainCharacter("Hero", 100, 100, 100, 0, 10, 10, 10, forest, 4);
         hero.setInventoryItem(0, emptySlot);
         hero.setInventoryItem(1, emptySlot);
@@ -104,9 +101,11 @@ public class Game{
 
         enemy1 = new EnemyCharacter("Draxus", 25, 50, 10, healthPotion, 10, 3); 
 
-        /*Here we create all of the exits associated with the location. The first parameter is the
-        cardinal direction which is the final int we declared at the beginning of our code and
-        the second parameter is the location object associated with that exit based on our map*/
+        /*
+            Here we create all of the exits associated with the location. The first parameter is the
+            cardinal direction which is the final int we declared at the beginning of our code and
+            the second parameter is the location object associated with that exit based on our map
+        */
         forest.setExit(NORTH, town);
         forest.setExit(EAST, null);
         forest.setExit(SOUTH, null);
@@ -138,7 +137,7 @@ public class Game{
     }
 
     public void play(){
-        System.out.println("\n\n\n\nType \"man\" to access the manual.");
+        System.out.println("Type \"man\" to access the manual.");
         System.out.println("You awaken in a forest unsure of where you are.");
     }
 
@@ -154,7 +153,7 @@ public class Game{
     public String handlePlayerInput(String rawInput){
         String input = processInput(rawInput);
 
-        if(input.equals("quit") || input.equals("q")){
+        if(input.equals("quit")){
             gameRunning = false;
             return "Shutting Down";
         }
@@ -166,7 +165,7 @@ public class Game{
             }
         }
         if(input.equals("man")){
-            manual();
+            return manual();
         }
         if(input.equals("character")){
             return hero.toString();
@@ -176,37 +175,64 @@ public class Game{
             return moveMainCharacter(direction);
         }
         if(input.equals("location")){
-            return hero.getCurrentLocation().getLocationDescription();
+            Location currentLocation = hero.getCurrentLocation();
+            String currentLocationName = currentLocation.getLocationName();
+            String currentLocationDescription = currentLocation.getLocationDescription();
+            return "\nYou are currently in the " + currentLocationName + "\n" + currentLocationDescription;
         }
         if(input.equals("view inventory")){
             return viewInventory();
         }
         if(input.equals("search area")){
-            System.out.println(searchArea());
+            return searchArea();
         }
-        if(input.startsWith("pick up")){
+        if(input.startsWith("pick up") || input.startsWith("pickup")){
             System.out.println(pickupItem(input));
         }
         if(input.startsWith("use ")){
-        return useItem(input);
+            return useItem(input);
         }
         return "";
     }
 
-    public void manual(){
-        String man = """
-        Manual:
-        To quit the game type "quit" or "q".
-        To move your character type “Go” followed by North, East, South, or West.
-        To get a description of your character type “Character”.
-        To get a description of your current location type “Location”.
-        To view your inventory type “View Inventory”.
-        To search an area for useful items type "Search area".
-        To pick up an item type "Pick up <item name>".
-        To fight an enemy type "fight <enemy name>".
-        To use a potion type "use <potion name>".
-                    """;
-        System.out.println(man);
+    /*
+        This is the games manual and it contains all the valid commands a player can use. 
+    */
+    public String manual(){
+        return          """
+                                    Game Manual:
+
+        (1) To quit the game type "quit".
+        (2) To move your character type “Go” followed by "North", "East", "South", or "West".
+        (3) To get a description of your character type “Character”.
+        (4) To get a description of your current location type “Location”.
+        (5) To view your inventory type “View Inventory”.
+        (6) To search an area for useful items type "Search Area".
+        (7) To pick up an item type "Pick Up <Item Name>".
+        (8) To fight an enemy type "Fight <Enemy Name>".
+        (9) To use a potion type "Use <Potion Name>"
+                        """;
+    }
+
+    /*
+        This method actually takes care of the logic of assigning the new location to the main character.
+    */
+
+    public String moveMainCharacter(int direction){
+        //This line assigns a new nextLocation object with the exit of the current location object
+        Location nextLocation = hero.getCurrentLocation().getExit(direction);
+
+        //If there is no exit associated with the direction return string stating so.
+        if(nextLocation == null){
+            return "\nThere is nothing noteworthy in that direction.\n";
+        }
+        else{
+            //This line assigns the nextLocation object to the new current location.
+            hero.setCurrentLocation(nextLocation);
+
+            //Printing the movement message and giving description of new location.
+            return "\nMoving to " + nextLocation.getLocationName() + "\n" + nextLocation.getLocationDescription();
+        }
     }
 
 
@@ -234,31 +260,6 @@ public class Game{
     }
 
     /*
-        This method actually takes care of the logic of assigning the new location to our 
-        main characters currentLocation variable
-    */
-
-    public String moveMainCharacter(int direction){
-        //This line assigns a new nextLocation object with the exit of the current location object
-        Location nextLocation = hero.getCurrentLocation().getExit(direction);
-
-        //If there is no exit return -1 and state that the user cannot go there
-        if(nextLocation == null){
-            return "You cannot go into that direction";
-        }
-        else{
-            //This line assigns the nextLocation object to the new current location
-            hero.setCurrentLocation(nextLocation);
-            //Building movement message
-            String output = "Moving to " + nextLocation.getLocationName();
-            //Printing message
-            System.out.println(output);
-            System.out.println(nextLocation.getLocationDescription());
-            return "";//returning this because output already happened here
-        }
-    }
-
-    /*
         This method respond to the location commands and gives a 
         brief description about the players current location.
     */
@@ -275,7 +276,7 @@ public class Game{
         This method allows the player to search an area for items. It loops over all items within
         the players current location and lists where the items and where they are located.
     */
-    public boolean searchArea(){
+    public String searchArea(){
     boolean itemFound = false;
         for(int i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
             if(hero.getCurrentLocation().getLocationItem(i) != null){
@@ -287,10 +288,12 @@ public class Game{
             }
         }
 
-        if(itemFound == false){
-            System.out.println("You search but cannot find anything.");
+        if(itemFound == true){
+            return "You find some items you can pick up.";
         }
-        return itemFound;
+        else{
+            return "You search but cannot find anything.";
+        }
     }
 
     /*
@@ -412,15 +415,15 @@ public class Game{
     health an mana points.
   */
     public String useItem(String input){
-        String itemName = input.substring(4).trim();
+        String itemToBeUsed = input.substring(4).trim();
 
         for(int i = 0; i < hero.getCharacterInventoryLength(); i++){
-            Item item = hero.getCharacterInventoryItem(i);
+            Item itemInInventory = hero.getCharacterInventoryItem(i);
 
-            if(item != null && item.getItemName().equalsIgnoreCase(itemName)){
+            if(itemInInventory != null && itemInInventory.getItemName().equalsIgnoreCase(itemToBeUsed)){
 
-                if(item instanceof Consumable){
-                    Consumable potion = (Consumable) item;
+                if(itemInInventory instanceof Consumable){
+                    Consumable potion = (Consumable) itemInInventory;
 
                     // apply effects
                     hero.setCharacterHP(hero.getCharacterHP() + potion.getHealthPoints());

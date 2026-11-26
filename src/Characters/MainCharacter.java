@@ -88,8 +88,8 @@ public class MainCharacter extends Character{
     @Override
     public String toString(){
         return super.toString() + "\nExperience Points: " + getExperiencePoints() +
-        "\nLevel: " + getLevel() + "\nStrength level: " + getStrengthLevel() + "\nDefense level: " +
-        getDefenseLevel() + "\n\nCurrent location: " + getCurrentLocation().getLocationName();
+        "\nCurrent Level: " + getLevel() + "\nStrength Level: " + getStrengthLevel() + "\nDefense Level: " +
+        getDefenseLevel() + "\n\nCurrent Location: " + getCurrentLocation().getLocationName();
     }
 
     //This updates the main characters experience points and levels them up if experience points is 100 or more

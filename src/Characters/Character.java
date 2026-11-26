@@ -78,9 +78,9 @@ public abstract class Character{
 
     //Special purpose methods
     public String toString(){
-        return "Character name: " + getCharacterName() + "\n" +
-        "Current HP: " + getCharacterHP() + "\n" +
-        "Current MP: " + getCharacterMP() + "\n" +
-        "Current GP: " + getCharacterGP();
+        return "\nName: " + getCharacterName() + "\n" +
+        "Health Points: " + getCharacterHP() + "\n" +
+        "Mana Points: " + getCharacterMP() + "\n" +
+        "Gold Points: " + getCharacterGP();
     }
 }
