@@ -1,0 +1,23 @@
+Function:
+    initialize - good
+    play -
+    man - good
+    parseDirection - good
+    moveMainCharacter - good
+    Location - good
+    viewInventory - Good
+    searchArea - Good
+    PickupItem -
+    ItemDecider - 
+        -Rework declare items outside of the function globally?
+        -Declare location item length globally?
+        -Check returns
+    ItemTransfer -
+        -Check returns
+    useItem
+        -Declare global inventory length?
+        -Ensure logic for not going over make HP
+
+Class:
+    Main Character has additional inventory array
+    Create fractions for character HP and MP reporting
