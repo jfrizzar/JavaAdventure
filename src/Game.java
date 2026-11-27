@@ -1,7 +1,7 @@
 import java.util.Scanner;
-import Characters.*;
-import Items.*;
-import Location.*;
+import characters.*;
+import items.*;
+import location.*;
 
 public class Game{
     /*
@@ -17,20 +17,29 @@ public class Game{
         Declaring all objects to be initialized globally so that they don't dissapear
         due to being declared locally within a method
     */
+   //Locations
     public Location forest;
     public Location town;
     public Location cave;
     public Location desert;
     public Location castle;
     public Location inn;
-    public MainCharacter hero;
+    //Main Character
+    public MainCharacter player;
+    //NPCs
+    public NPCharacter NPC;
     public Gambler gambler;
     public Merchant merchant;
-    public EnemyCharacter enemy1;
+    //Items
     public Item emptySlot;
     public Consumable healthPotion;
     public Consumable manaPotion;
     public Weapon sword;
+    public Weapon goblinSword;
+    public Weapon darkKnightSword;
+    public EnemyCharacter draxus;
+    public EnemyCharacter goblin;
+
 
     //Set is running to true to enable the gameplay loop
     public boolean gameRunning = true;
@@ -66,11 +75,11 @@ public class Game{
     */
     public void initialize(){
         //Initializing all locations
-        forest = new Location("Forest of Dreams", "A quaint forest, there is nobody around except for yourself.\n","North - Brimswick\n West - Goopy Cave", 2);
-        town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.\n", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 2);
-        cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!\n", "The only way out of here is East.", 2);
-        inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table\n", "The only way out of here is West.", 2);
-        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight named draxus comes up to you menacingly.\n", "The only way out is South", 2);
+        forest = new Location("Forest of Dreams", "A quaint forest, there is nobody around except for yourself.\n","North - Brimswick\n West - Goopy Cave", 0, 0, 0);
+        town = new Location("The Town of Brimswick", "The town of Brimswick, established in the golden era home to many of the noble family.\n", "North - Corrupted Castle\nEast - Stove Pipe Inn\nSouth - Forest of Dreams\n", 0, 0, 0);
+        cave = new Location("Goopy Cave", "A dank cave with a weirdly sweet smell, there is an item behind a rock to your right, and what look to be a goblin 20 feet ahead!\n", "The only way out of here is East.", 1, 2, 2);
+        inn = new Location("The Stove Pipe Inn", "A nice warm inn, a hotspot for travelling merchants, somebody left something here on the table\n", "The only way out of here is West.", 0, 0, 0);
+        castle = new Location("Corrupted Castle", "You get a bad feeling from this castle, a dark knight named draxus comes up to you menacingly.\n", "The only way out is South", 1, 1, 1);
 
         
         //Initializing all items
@@ -78,62 +87,66 @@ public class Game{
         healthPotion = new Consumable("Health Potion", 50, 0);
         manaPotion = new Consumable("Mana Potion", 0, 50);
         sword = new Weapon("Sword", 10);
-        Weapon goblinSword = new Weapon("Goblin Sword",10);
-        Weapon darkKnightSword = new Weapon("Dark Knight Sword", 20);
-        EnemyCharacter draxus = new EnemyCharacter("Draxus", 60,20,1000,darkKnightSword,200, 4);
-        EnemyCharacter goblin = new EnemyCharacter( "Goblin", 30, 10, 5, goblinSword, 20, 1);
+        goblinSword = new Weapon("Goblin Sword",10);
+        darkKnightSword = new Weapon("Dark Knight Sword", 20);
+        draxus = new EnemyCharacter("Draxus", 60, 60, 20, 20, 1000, 100, 100, 4, castle);
+        goblin = new EnemyCharacter( "Goblin", 25, 25, 1, 1, 10, 10, 10, 4, cave);
 
         //Initializing all characters
-        hero = new MainCharacter("Hero", 100, 100, 100, 0, 10, 10, 10, forest, 4);
-        hero.setInventoryItem(0, emptySlot);
-        hero.setInventoryItem(1, emptySlot);
-        hero.setInventoryItem(2, emptySlot);
-        hero.setInventoryItem(3, emptySlot);
+        player = new MainCharacter("Player1", 100, 100, 100, 100, 0, 0, 100, 4, forest, 1, 10, 5);
+        player.setInventoryItem(0, emptySlot);
+        player.setInventoryItem(1, emptySlot);
+        player.setInventoryItem(2, emptySlot);
+        player.setInventoryItem(3, emptySlot);
 
-        gambler = new Gambler("Dommermac", 100, 100, 100, 
+        gambler = new Gambler("Dommermac", 100, 100, 100, 100, 100, 1, 1, 4, inn,
             new String[]{"Haven't seen you around before.", "Care to play some dice with a stranger, Stranger?"}, 
             new String[]{"Now don't go getting lost or I'll have one less person to wager with, ya?", "Hope your luck is better out there than it was in here, Stranger."}, 
-            new String[]{"Ask where you are", "Play Dice","Exit"}, 4);
+            new String[]{"Ask where you are", "Play Dice","Exit"});
         
-        merchant = new Merchant("Wizlo", 100, 100, 3000, new String[]{"Welcome traveler!", "Welcome " +
-         "to my shop, friend!"}, new String[]{"Bye bye, friend.", "Let's not be strangers now. Goodbye!"},new String[]{"Talk", "Shop", "Leave"
-         }, 5, new Item[]{healthPotion, manaPotion, sword}, new int[]{10, 10, 40});
+        merchant = new Merchant("Wizlo", 100, 100, 100, 100, 3000, 1, 1, 4, town,
+            new String[]{"Welcome traveler!", "Welcome " + "to my shop, friend!"},
+            new String[]{"Bye bye, friend.", "Let's not be strangers now. Goodbye!"},
+            new String[]{"Talk", "Shop", "Leave"},
+            new Item[]{healthPotion, manaPotion, sword}, 
+            new int[]{10, 10, 40});
 
-        enemy1 = new EnemyCharacter("Draxus", 25, 50, 10, healthPotion, 10, 3); 
 
         /*
             Here we create all of the exits associated with the location. The first parameter is the
             cardinal direction which is the final int we declared at the beginning of our code and
             the second parameter is the location object associated with that exit based on our map
         */
-        forest.setExit(NORTH, town);
-        forest.setExit(EAST, null);
-        forest.setExit(SOUTH, null);
-        forest.setExit(WEST, cave);
+        forest.setLocationExit(NORTH, town);
+        forest.setLocationExit(EAST, null);
+        forest.setLocationExit(SOUTH, null);
+        forest.setLocationExit(WEST, cave);
 
-        cave.setExit(NORTH, null); 
-        cave.setExit(EAST, forest); 
-        cave.setExit(SOUTH, null);        
-        cave.setExit(WEST, null);
-        cave.setItem(0, healthPotion, "Behind a large boulder.");
-        cave.setItem(1, sword, "In a shallow puddle.");
-        cave.setEnemy(goblin);
+        cave.setLocationExit(NORTH, null); 
+        cave.setLocationExit(EAST, forest); 
+        cave.setLocationExit(SOUTH, null);        
+        cave.setLocationExit(WEST, null);
+        cave.setLocationItem(0, healthPotion);
+        cave.setLocationItemDescription(0, "Behind a boulder.");
+        cave.setLocationItem(1, sword);
+        cave.setLocationItemDescription(1, "In a shallow puddle.");
+        cave.setLocationEnemy(0, goblin);
 
-        town.setExit(NORTH, castle);
-        town.setExit(EAST, inn);
-        town.setExit(SOUTH, forest);
-        town.setExit(WEST, null);
+        town.setLocationExit(NORTH, castle);
+        town.setLocationExit(EAST, inn);
+        town.setLocationExit(SOUTH, forest);
+        town.setLocationExit(WEST, null);
 
-        inn.setExit(NORTH, null);
-        inn.setExit(EAST, null);
-        inn.setExit(SOUTH, null);
-        inn.setExit(WEST, town);
+        inn.setLocationExit(NORTH, null);
+        inn.setLocationExit(EAST, null);
+        inn.setLocationExit(SOUTH, null);
+        inn.setLocationExit(WEST, town);
 
-        castle.setExit(NORTH, null);
-        castle.setExit(EAST, null);
-        castle.setExit(SOUTH, town);
-        castle.setExit(WEST, null);
-        castle.setEnemy(draxus);
+        castle.setLocationExit(NORTH, null);
+        castle.setLocationExit(EAST, null);
+        castle.setLocationExit(SOUTH, town);
+        castle.setLocationExit(WEST, null);
+        castle.setLocationEnemy(0, draxus);
     }
 
     public void play(){
@@ -168,14 +181,14 @@ public class Game{
             return manual();
         }
         if(input.equals("character")){
-            return hero.toString();
+            return player.toString();
         }
         if(input.equals("go north") || input.equals("go east") || input.equals("go south") || input.equals("go west")){
             int direction = parseDirection(input);
             return moveMainCharacter(direction);
         }
         if(input.equals("location")){
-            Location currentLocation = hero.getCurrentLocation();
+            Location currentLocation = player.getCharacterLocation();
             String currentLocationName = currentLocation.getLocationName();
             String currentLocationDescription = currentLocation.getLocationDescription();
             return "\nYou are currently in the " + currentLocationName + "\n" + currentLocationDescription;
@@ -191,6 +204,9 @@ public class Game{
         }
         if(input.startsWith("use ")){
             return useItem(input);
+        }
+        if(input.startsWith("talk to ")){
+            //talkToNPC(player, input, npc);
         }
         return "";
     }
@@ -220,7 +236,7 @@ public class Game{
 
     public String moveMainCharacter(int direction){
         //This line assigns a new nextLocation object with the exit of the current location object
-        Location nextLocation = hero.getCurrentLocation().getExit(direction);
+        Location nextLocation = player.getCharacterLocation().getLocationExit(direction);
 
         //If there is no exit associated with the direction return string stating so.
         if(nextLocation == null){
@@ -228,7 +244,7 @@ public class Game{
         }
         else{
             //This line assigns the nextLocation object to the new current location.
-            hero.setCurrentLocation(nextLocation);
+            player.setCharacterLocation(nextLocation);
 
             //Printing the movement message and giving description of new location.
             return "\nMoving to " + nextLocation.getLocationName() + "\n" + nextLocation.getLocationDescription();
@@ -265,9 +281,9 @@ public class Game{
     */
     public String viewInventory(){
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < hero.getCharacterInventoryLength(); i++){
+        for(int i = 0; i < player.getCharacterInventoryLength(); i++){
             sb.append("Item ").append(i + 1).append(": ")
-            .append(hero.getCharacterInventoryItem(i)).append("\n");
+            .append(player.getCharacterInventoryItem(i)).append("\n");
         }
         return sb.toString();
     }
@@ -278,10 +294,10 @@ public class Game{
     */
     public String searchArea(){
     boolean itemFound = false;
-        for(int i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
-            if(hero.getCurrentLocation().getLocationItem(i) != null){
+        for(int i = 0; i < player.getCharacterLocation().getLocationItemCount(); i++){
+            if(player.getCharacterLocation().getLocationItem(i) != null){
                 itemFound = true;
-                System.out.println("You found: " + hero.getCurrentLocation().getLocationItem(i).getItemName() + " " + hero.getCurrentLocation().getItemSpot(i));
+                System.out.println("You found: " + player.getCharacterLocation().getLocationItem(i).getItemName());
             }
             else{
                 continue;
@@ -304,8 +320,8 @@ public class Game{
     public String pickupItem(String input){
         boolean availableItems = false;
         try{
-            for(int i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
-                if(hero.getCurrentLocation().getLocationItem(i) != null){
+            for(int i = 0; i < player.getCharacterLocation().getLocationItemCount(); i++){
+                if(player.getCharacterLocation().getLocationItem(i) != null){
                     availableItems = true;
                 }
                 else{
@@ -334,7 +350,7 @@ public class Game{
         Weapon sword = new Weapon("Sword", 10);
 
 
-        for(i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
+        for(i = 0; i < player.getCharacterLocation().getLocationItemCount(); i++){
             if(input.toLowerCase().endsWith("health potion")){
                 itemTransfer(healthPotion);
                 return;
@@ -355,17 +371,17 @@ public class Game{
     */
     public void itemTransfer(Item newItem){
         int i;
-        for(i = 0; i < hero.getCharacterInventoryLength(); i++){
-            if(hero.getCharacterInventoryItem(i) == null || hero.getCharacterInventoryItem(i) == emptySlot){
-                hero.setInventoryItem(i, newItem);
+        for(i = 0; i < player.getCharacterInventoryLength(); i++){
+            if(player.getCharacterInventoryItem(i) == null || player.getCharacterInventoryItem(i) == emptySlot){
+                player.setInventoryItem(i, newItem);
                 System.out.println("You pick up: " + newItem.getItemName());
                 
-                for(i = 0; i < hero.getCurrentLocation().getLocationItemLength(); i++){
-                    if(hero.getCurrentLocation().getLocationItem(i) == null){
+                for(i = 0; i < player.getCharacterLocation().getLocationItemCount(); i++){
+                    if(player.getCharacterLocation().getLocationItem(i) == null){
                         continue;
                     }
-                    else if(hero.getCurrentLocation().getLocationItem(i).getItemName().equals(newItem.getItemName())){
-                        hero.getCurrentLocation().setItem(i, null, null);
+                    else if(player.getCharacterLocation().getLocationItem(i).getItemName().equals(newItem.getItemName())){
+                        player.getCharacterLocation().setLocationItem(i, null);
                     }
                 }
                 return;
@@ -380,33 +396,48 @@ public class Game{
         a patricular location.
     */
     public boolean fightEnemy(String enemyName){
-        EnemyCharacter enemy = hero.getCurrentLocation().getEnemyByName(enemyName);
-
-        if(enemy == null){
+        int locationEnemyCount = player.getCharacterLocation().getLocationEnemyCount();
+        if(locationEnemyCount == 0){
             System.out.println("That enemy is not here.");
             return true;
         }
 
+        EnemyCharacter enemy = null;
+        int locationEnemyIndex = -1;
+
+        for(int i = 0; i < locationEnemyCount; i++){
+            if(player.getCharacterLocation().getLocationEnemy(i).getCharacterName() == enemyName){
+                enemy = player.getCharacterLocation().getLocationEnemy(i);
+                locationEnemyIndex = i;
+                break;
+            }
+            else{
+                continue;
+            }
+        }
+
         System.out.println("You are fighting " + enemy.getCharacterName());
 
-        if(hero.getLevel() >= enemy.getExpReward() / 10){
+        if(player.getCharacterLevel() >= enemy.getCharacterCurrentXP() / 10){
             System.out.println("You defeated " + enemy.getCharacterName());
 
-            Item loot = enemy.getLoot();
+            //NEED TO FIX GETTING LOOT MECHANISM
+            Item loot = enemy.getCharacterInventoryItem(1);
 
             if(loot != null){
                 itemDecider(loot.getItemName());
             }
 
-            hero.gainExperience(enemy.getExpReward());
-            hero.getCurrentLocation().removeEnemy(enemy);
-
+            player.setCharacterCurrentXP(player.getCharacterCurrentXP() + enemy.getCharacterCurrentXP());
+            //NEED TO FIX REMOVING ENEMY
+            player.getCharacterLocation().setLocationEnemy(locationEnemyIndex, null);
             return true;
         }
         else{
             System.out.println(enemy.getCharacterName() + " was too strong.");
             System.out.println("Game over.");
-            return false;
+            //End game if battle is lost
+            return gameRunning = false;
         }
   }
 
@@ -417,8 +448,8 @@ public class Game{
     public String useItem(String input){
         String itemToBeUsed = input.substring(4).trim();
 
-        for(int i = 0; i < hero.getCharacterInventoryLength(); i++){
-            Item itemInInventory = hero.getCharacterInventoryItem(i);
+        for(int i = 0; i < player.getCharacterInventoryLength(); i++){
+            Item itemInInventory = player.getCharacterInventoryItem(i);
 
             if(itemInInventory != null && itemInInventory.getItemName().equalsIgnoreCase(itemToBeUsed)){
 
@@ -426,13 +457,13 @@ public class Game{
                     Consumable potion = (Consumable) itemInInventory;
 
                     // apply effects
-                    hero.setCharacterHP(hero.getCharacterHP() + potion.getHealthPoints());
-                    hero.setCharacterMP(hero.getCharacterMP() + potion.getManaPoints());
+                    player.setCharacterCurrentHP(player.getCharacterCurrentHP() + potion.getItemHP());
+                    player.setCharacterCurrentMP(player.getCharacterCurrentMP() + potion.getItemMP());
 
-                    potion.consume();
+                    potion.consumeItem();
 
                     // remove item after use
-                    hero.setInventoryItem(i, emptySlot);
+                    player.setInventoryItem(i, emptySlot);
 
                     return "You used " + potion.getItemName();
                 }
@@ -443,5 +474,34 @@ public class Game{
         }
         return "Item not found in inventory.";
     }
-}
 
+    //Talk to NPC Function
+    //This parameter allows the NPC character to play with the user character's methods
+    public void talkToNPC(MainCharacter player, String Input, NPCharacter NPC){
+        Scanner dialogueScanner = new Scanner(System.in);
+        boolean talking = true;
+
+        //Shows a random greeting
+        NPC.showRandomGreeting();
+
+        //Dialogue Loop
+        while(talking){
+            System.out.println("\nTalking to " + NPC.getCharacterName());
+            NPC.showDialogueMenu();
+            System.out.print("Choose an option: ");
+
+            String optionSelected = dialogueScanner.nextLine();
+
+            if(optionSelected.isEmpty() || !optionSelected.matches("\\d+")){
+                System.out.println("You cannot choose that.");
+                continue;
+            }
+
+            int choice = Integer.parseInt(optionSelected);
+            talking = NPC.handleChoice(choice, player, optionSelected);
+        }
+
+        //Shows a random goodbye
+        NPC.showRandomGoodbye();
+    }
+}
