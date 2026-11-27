@@ -1,43 +1,47 @@
-package Characters;
-import Items.Item;
-import java.util.Scanner;
+package characters;
+import items.Item;
+import location.Location;
 
 /*
     This character will play a dice game with the player. 
-    When a player wins they get gold
-    When a player loses the gambler takes an item from the players inventory
+    When a player wins they get gold.
+    When a player loses the gambler takes an item from the players inventory.
 */
 
 public class Gambler extends NPCharacter{
-
-    //Constructors
-    public Gambler(String characterName, int characterHP, int characterMP, int characterGP, String[] greetings, 
-        String[] goodbyes, String[] dialogueOptions, int inventorySize){
-        super(characterName, characterHP, characterMP, characterGP
-            ,greetings, goodbyes, dialogueOptions, inventorySize);
+    //Constructor
+    public Gambler(String characterName, int characterCurrentHP, int characterMaxHP, 
+                     int characterCurrentMP, int characterMaxMP, int characterGP, 
+                     int characterCurrentXP, int characterMaxXP, int inventorySize,
+                     Location characterLocation, String[] npcGreetings, String[] npcGoodbyes, 
+                     String[] npcDialogueOptions){
+        super(characterName, characterCurrentHP, characterMaxHP, 
+              characterCurrentMP, characterMaxMP, characterGP, 
+              characterCurrentXP, characterMaxXP, inventorySize,
+              characterLocation, npcGreetings, npcGoodbyes,
+              npcDialogueOptions);
     }
 
     @Override
-    public boolean handleChoice(int choice, MainCharacter player, Scanner input){
+    public boolean handleChoice(int choice, MainCharacter player, String optionSelected){
         switch(choice){
-            
             case 1: //Response to "Where am I?"
-            System.out.println(talk("Ah, you don't know where you are, do you? Here's the thing. If I told you, that would ruin the" +  
-            " only thing that's fun about a mystery, now wouldn't it? Why don't you have a seat and we'll play some dice, ya? Looks " +
-            "like you've got about " + player.getCharacterGP() + " gold pieces on you. I have plenty of gold, but don't worry, maybe you're" +
-             " carrying something else I might like."));
-            return true;
+                System.out.println(talk("Ah, you don't know where you are, do you? Here's the thing. If I told you, that would ruin the" +  
+                " only thing that's fun about a mystery, now wouldn't it? Why don't you have a seat and we'll play some dice, ya? Looks " +
+                "like you've got about " + player.getCharacterGP() + " gold pieces on you. I have plenty of gold, but don't worry, maybe you're" +
+                " carrying something else I might like."));
+                return true;
 
             case 2: //Dice game chosen (Ends in gold reward or taken item)
-            playDiceGame(player);
-            return true;
+                playDiceGame(player);
+                return true;
 
             case 3: //Chooses exit interaction
-            return false;
+                return false;
 
             default: //User types something other than the choices
-            System.out.println(talk("\nYeah, that ain't happenin'.")); 
-            return true;
+                System.out.println(talk("\nYeah, that ain't happenin'.")); 
+                return true;
         }
     }
 
@@ -80,16 +84,14 @@ public class Gambler extends NPCharacter{
                 //If the player has no items to take:
                 System.out.println(talk("Y'ave nothing worth taking looks like. Game was on the house then, ya?"));
             }else{
+                Item emptySlot = new Item("Empty");
                 Item stolenItem = player.getCharacterInventoryItem(index);
-                player.setInventoryItem(index, null); //removing item
-
+                player.setInventoryItem(index, emptySlot); //removing item
                 System.out.println("\nThe hooded man snatches your " + stolenItem.getItemName() + "! You may never see it again.");
             }
         }
         else{
             System.out.println(talk("Looks like no one won. Let's go again, ya?"));
         }
-
-
     }
 }
